@@ -1,0 +1,32 @@
+name = minnehaha
+description = minnehaha lofts theme
+version = 0.1
+core = 7.x
+base theme = bootstrap
+
+regions[navigation]     = 'Navigation'
+regions[header]         = 'Top Bar'
+regions[highlighted]    = 'Highlighted'
+regions[help]           = 'Help'
+regions[content]        = 'Content'
+regions[sidebar_first]  = 'Primary'
+regions[sidebar_second] = 'Secondary'
+regions[footer]         = 'Footer'
+regions[sticky_property_menu]  = 'Sticky Property Menu'
+regions[property_menu] = 'Property Menu'
+regions[header_logo]    = 'Header Logo'
+regions[other_menu]          = 'Other Menu'
+regions[leave_testimonial]          = 'Leave Testimonial'
+regions[unit_inquiry]          = 'Unit Inquiry'
+
+stylesheets[all][] = css/type.css
+stylesheets[all][] = css/style.css
+;stylesheets[all][] = css/mobile.css
+;stylesheets[all][] = css/errors.css
+;stylesheets[all][] = css/main.css
+
+; JS
+scripts[] = js/application.js
+
+settings[toggle_name] = 0
+settings[toggle_search] = 1
