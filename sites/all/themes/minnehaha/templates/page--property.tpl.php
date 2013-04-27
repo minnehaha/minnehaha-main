@@ -2,7 +2,7 @@
     <div class="pilihan-warna">
         <ul>
             <?php
-            foreach($propertyMenu as $key => $rental_unit){
+            foreach($propertyMap as $key => $rental_unit){
                 $indexOfHyphen = strrpos($rental_unit['title'],'-') + 1;
                 print '<li><a href="'.$rental_unit['url'].'">'.substr($rental_unit['title'],0,$indexOfHyphen).'<span style="display:block;margin-left: 25px;margin-top: -5px">'.substr($rental_unit['title'],$indexOfHyphen).'</span></a></li>';
             }
@@ -109,7 +109,7 @@
                 <ul class="nav nav-list">
                     <li class="nav-header">Other</li>
                     <?php
-                    foreach($propertyMenuWithoutThis as $key => $rental_unit){
+                    foreach($propertyMapWithoutOne as $key => $rental_unit){
                         print '<li><a href="'.$rental_unit['url'].'"><i class="icon-home"></i>'.$rental_unit['title'].'</a></li>';
                     }
                     ?>

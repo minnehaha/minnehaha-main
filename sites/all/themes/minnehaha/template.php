@@ -12,44 +12,126 @@ function minnehaha_preprocess_page(&$vars, $hook) {
 
     // Now return the node objects.
     $properties = node_load_multiple($nids);
-    $propertyMenu = array();
+    $propertyMap = array();
     $i = 0;
     foreach ($properties as $key => $value)
     {
-        var_dump($value);
-        $propertyMenu[ $i ]['title'] = $value->title;
-        $propertyMenu[ $i ]['url'] = drupal_get_path_alias("node/$key");
+        $propertyMap[ $i ]['title'] = $value->title;
+        $propertyMap[ $i ]['url'] = drupal_get_path_alias("node/$key");
         $featuredPhoto = $value->field_featured_photo;
-        $propertyMenu[ $i ]['featuredPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredPhoto[0]['uri']), array('absolute'=>true));
-//        $fieldParagraphAboutProperty = $value->field_paragraph_about_property;
-        $fieldParagraphAboutProperty = field_get_items('node', $value, 'field_paragraph_about_property');
-        $propertyMenu[ $i ]['summary'] = $fieldParagraphAboutProperty[0]['value'];
+        $propertyMap[ $i ]['featuredPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredPhoto['und'][0]['uri']), array('absolute'=>true));
+        $propertyMap[ $i ]['featuredPhotoAlt'] = $value->field_featured_photo['und'][0]['alt'];
+        $fieldParagraphAboutProperty = $value->field_paragraph_about_property;
+        $propertyMap[ $i ]['summary'] = $fieldParagraphAboutProperty['und'][0]['value'];
         $i++;
     }
-//    var_dump($propertyMenu);
-    $vars['propertyMenu'] = $propertyMenu;
+    $vars['propertyMap'] = $propertyMap;
+
+    //about hosts for front page
+    $aboutHosts = node_load(17);
+    $hostsCollection = array();
+    $hostsCollection['summary'] = $aboutHosts->field_paragraph_of_content['und'][0]['value'];
+    $hostsCollection['url'] = drupal_get_path_alias("node/17");
+    $hostsCollection['imgUrl'] = url('sites/default/files/'.file_uri_target($aboutHosts->field_basic_page_featured_photo['und'][0]['uri']), array('absolute'=>true));
+    $hostsCollection['imgAlt'] = $aboutHosts->field_basic_page_featured_photo['und'][0]['alt'];
+    $vars['aboutHost'] = $hostsCollection;
 
     if (isset($vars['node'])) {
         $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
-        if($vars['node']->type == 'property'){
-            minnehaha_preprocess_property($vars,$hook, $propertyMenu);
-        }else{
-            $fieldHeaderBkIma = field_get_items('node', $vars['node'], 'field_header_background_image');
-            if ($fieldHeaderBkIma){
-                $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
-            }
-
-            $fieldPageSlogan = field_get_items('node', $vars['node'], 'field_page_slogan');
-            if ($fieldPageSlogan){
-                $vars['page_slogan'] = $fieldPageSlogan[0]['value'];
-            }
-
+        switch($vars['node']->type){
+            case "property":
+                minnehaha_preprocess_property($vars, $hook, $propertyMap);
+                break;
+            case "faq_page":
+                minnehaha_preprocess_faq_page($vars, $hook);
+                break;
+            default:
+                minnehaha_preprocess_basic_page($vars, $hook);
+                break;
         }
     }
 }
 
-function minnehaha_preprocess_property(&$vars, $hook, $propertyMenu) {
-    //@ToDo: this is not called by Drupal, so manually calling from 'minnehaha_preprocess_page'
+function minnehaha_preprocess_basic_page(&$vars, $hooks){
+    $node = $vars['node'];
+    $fieldHeaderBkIma = field_get_items('node', $node, 'field_header_background_image');
+    if ($fieldHeaderBkIma){
+        $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
+    }
+
+    $fieldPageSlogan = field_get_items('node', $node, 'field_page_slogan');
+    if ($fieldPageSlogan){
+        $vars['page_slogan'] = $fieldPageSlogan[0]['value'];
+    }
+
+    $fieldParagraphOfContent = field_get_items('node', $node, 'field_paragraph_of_content');
+    $sizeOfParagraphs = count($fieldParagraphOfContent);
+    $basicParagraphs = array();
+    for ($i = 0; $sizeOfParagraphs > $i; $i++)
+    {
+         $basicParagraphs[$i] = $fieldParagraphOfContent[$i]['value'];
+    }
+    $vars['basicPagePars'] = $basicParagraphs;
+
+    $fieldContentPhotos = field_get_items('node', $node, 'field_content_photos');
+    $basicPagePhotos = array();
+    for($i = 0; $i < count($fieldContentPhotos); $i++){
+        $contentPhoto = node_load($fieldContentPhotos[$i]['target_id']);
+        $basicPagePhotos[$i]['contentPhotoTitle'] = $contentPhoto->field_photo_title['und'][0]['value'];
+        $basicPagePhotos[$i]['contentPhotoDescription'] = $contentPhoto->field_photo_description['und'][0]['value'];
+        $contentPhotoImage = $contentPhoto->field_image_file;
+        $basicPagePhotos[$i]['contentPhotoImgUrl'] = url('sites/default/files/'.file_uri_target($contentPhotoImage['und'][0]['uri']), array('absolute'=>true));
+        $basicPagePhotos[$i]['contentPhotoImgAlt'] = $contentPhotoImage['und'][0]['alt'];
+    }
+    if(!empty($basicPagePhotos)){$vars['basicPagePhotos'] = $basicPagePhotos;}else{$vars['basicPagePhotos'] = 'empty';}
+
+    $fieldListOfContentText = field_get_items('node', $node, 'field_list_of_content_text');
+    $listOfText = array();
+    $entityOfList = node_load($fieldListOfContentText[0]['target_id']);
+    $listOfText['description'] = $entityOfList->field_description_of_list['und'][0]['value'];
+    $listOfText['item'] = array();
+    $numOfItems = count($entityOfList->field_list_item['und']);
+    for($i = 0 ; $i < $numOfItems; $i++){
+        $listOfText['item'][$i] = $entityOfList->field_list_item['und'][$i]['value'];
+    }
+    $vars['listOfText'] = $listOfText;
+}
+
+function minnehaha_preprocess_faq_page(&$vars, $hook){
+    $node = $vars['node'];
+
+    $fieldFAQSlogan = $node->field_faq_page_slogan;
+    if ($fieldFAQSlogan){
+        $vars['page_slogan'] = $fieldFAQSlogan['und'][0]['value'];
+    }
+    $fieldFAQHeaderBkIma = field_get_items('node', $vars['node'], 'field_faq_header_background_img');
+    if ($fieldFAQHeaderBkIma){
+        $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldFAQHeaderBkIma[0]['uri']), array('absolute'=>true));
+    }
+
+    $fieldFAQs =  $node->field_faq_questions_answers;
+    $fieldFAQList = array();
+    for ($i = 0; count($fieldFAQs['und']) > $i; $i++)
+    {
+        $qa = node_load($fieldFAQs['und'][$i]['target_id']);
+        $fieldFAQList[$i]['question'] = $qa->field_faq_question['und'][0]['value'];
+        $fieldFAQList[$i]['answer'] = $qa->field_faq_answer['und'][0]['value'];
+    }
+    $vars['listOfFAQ'] = $fieldFAQList;
+
+    $fieldParagraphBeforeFAQs = $node->field_paragraph_before_faq;
+    if ($fieldParagraphBeforeFAQs){
+        $vars['paragraphBeforeFAQs'] = $fieldParagraphBeforeFAQs['und'][0]['value'];
+    }
+    $fieldParagraphAfterFAQs = $node->field_paragraph_after_faq;
+    if ($fieldParagraphAfterFAQs){
+        $vars['paragraphAfterFAQs'] = $fieldParagraphAfterFAQs['und'][0]['value'];
+    }
+
+}
+
+function minnehaha_preprocess_property(&$vars, $hook, $propertyMap) {
+    //@ToDo: this is not called by Drupal,but, perhaps, it should. Temp solution manually calling from 'minnehaha_preprocess_page'
     $node = $vars['node'];
 
     $fieldPropertyCharacter =  $node->field_property_character;
@@ -88,7 +170,7 @@ function minnehaha_preprocess_property(&$vars, $hook, $propertyMenu) {
     $propertyPhotos = array();
     for($i = 0; $i < count($fieldPropertyPhoto); $i++){
         $propertyPhotos[$i]['url'] = url('sites/default/files/'.file_uri_target($fieldPropertyPhoto[$i]['uri'], array('absolute'=>true)));
-        $propertyPhotos[$i]['alt'] = $fieldPropertyPhoto[0]['alt'];
+        $propertyPhotos[$i]['alt'] = $fieldPropertyPhoto[$i]['alt'];
     }
     $vars['propertyPhotos'] = $propertyPhotos;
 
@@ -121,11 +203,11 @@ function minnehaha_preprocess_property(&$vars, $hook, $propertyMenu) {
 
     $otherProperty = array();
     $j=0;
-    foreach($propertyMenu as $key => $rental_unit){
+    foreach($propertyMap as $key => $rental_unit){
         if($rental_unit['title'] != $node->title){
             $otherProperty[$j] = $rental_unit;
                 $j++;
         }
     }
-    $vars['propertyMenuWithoutThis'] = $otherProperty;
+    $vars['propertyMapWithoutOne'] = $otherProperty;
 }

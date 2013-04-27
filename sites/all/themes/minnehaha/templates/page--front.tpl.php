@@ -64,59 +64,63 @@
                 <div class="clearfix batas"></div>
             </div>
             <div class="row-fluid">
-                <div class="span3">
-                    <h4>Charming Home - Sydney</h4>
-                    <div class="clearfix batas"></div>
-                    <a class="thumbnail">
-                    <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/sydney_min.jpg" alt="">'; ?>
-                    </a>
-                    <div class="clearfix batas"></div>
-                    <p>
-                        1Br/2Ba home has hardwood floors in dining room and bedroom, marble tiled kitchen and bathroom, with beautiful woodwork throughout...</p>
-                    <div class="clearfix batas"></div>
-                    <a class="btn btn-small" href="${createLink(action: 'sydney')}"><i class="icon-info-sign"></i> More</a>
+                <?php
+                foreach($propertyMap as $key => $rental_unit){
+                    print '<div class="span3 sticker">';
+                    print '<h4>'.$rental_unit['title'].'</h4>';
+                    print '<div class="clearfix batas"></div>';
+                    print '<a class="thumbnail">';
+                    print '<img src="'.$rental_unit['featuredPhotoUrl'].'" alt="'.$rental_unit['featuredPhotoAlt'].'">';
+                    print '</a>';
+                    print '<div class="clearfix batas"></div>';
+                    print '<p>'.substr($rental_unit['summary'],0,120).'...</p>';
+                    print '<div class="clearfix batas"></div>';
+                    print '<a class="btn btn-small" href="'.$rental_unit['url'].'"><i class="icon-info-sign"></i> More Info</a>';
+                    print '</div>';
+                }
+                ?>
+                <div class="span3 sticker">
+                    <?php
+                    print '<h4>Meet Your Hosts</h4>';
+                    print '<div class="clearfix batas"></div>';
+                    print '<a class="thumbnail">';
+                        print '<img src="'.$aboutHost['imgUrl'].'" alt="'.$aboutHost['imgAlt'].'">';
+                    print '</a>';
+                    print '<div class="clearfix batas"></div>';
+                    print '<p>'.substr($aboutHost['summary'],0,120).'...</p>';
+                    print '<div class="clearfix batas"></div>';
+                    print '<a class="btn btn-small" href="'.$aboutHost['url'].'"><i class="icon-info-sign"></i> More Info</a>';
+                    ?>
                 </div>
-                <div class="span3">
-                    <h4>Cozy Apartment - Riga</h4>
-                    <div class="clearfix batas"></div>
-                    <a class="thumbnail">
-                    <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/riga_min.jpg" alt="">'; ?>
-                    </a>
-                    <div class="clearfix batas"></div>
+                <div class="span6 sticker">
+                    <h1 class="subjudul">Located South Minneapolis</h1>
                     <p>
-                        This beautiful 1Bdr/BA with hardwood floors and natural wood work is located 2 blocks from Light Rail station (Airport-Downtown-Mall of America). Having Light Rail next to, it’s very convenient and quick to attend conference at University of Minnesota TC Campus
+                        We provide accommodation in a beautiful part of Minneapolis near Lake Nokomis and the Missisipi River. While being near so many attractions and downtown, you still have your privacy and sense of home. Light rail service few blocks away making it convenient  to commute. A nearby bike trail makes it easy to explore this beautiful city ...
                     </p>
-                    <div class="clearfix batas"></div>
-                    <a class="btn btn-small" href="${createLink(action: 'riga')}"><i class="icon-info-sign"></i> More</a>
+                    <p>
+                        <a class="btn btn-small" href="#"><i class="icon-asterisk"></i> More on Location & Map</a>
+                    </p>
                 </div>
-                <div class="span3">
-                    <h4>Cute Home - Minnehaha</h4>
-                    <div class="clearfix batas"></div>
-                    <a class="thumbnail">
-                        <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/minnehaha_min2.jpg" alt="">'; ?>
-                    </a>
-                    <div class="clearfix batas"></div>
+                <div class="span5 sticker">
+                    <h5><i class="  icon-comment jarak-kecil"></i> Testimonial</h5>
+                    <br />
+                    <!--        <g:each var="featuredReview" in="${company.featuredReviews}">-->
                     <p>
-                        Charming House walking distance Minnehaha Falls and Light Rail Train. Just remodeled one bedroom house in Nokomis Lake neighborhood wants to be your home while you visiting MN...
+                    <div class="span3">
+                        <!--                <img src="${createLinkTo(dir: featuredReview.imgUrl.tokenize('/')[0..-2].join('/').toLowerCase(), file: featuredReview.imgUrl.tokenize('/')[-1])}" class="span2 img-circle"  alt="">-->
+                        <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/sydney_min.jpg" alt="">'; ?>
+                    </div>
+                    <blockquote >${featuredReview.content}
+                        <small>${featuredReview.submittedBy} ${featuredReview.dateReceived.toString("MMM d, yyyy")}</small>
+                    </blockquote>
                     </p>
-                    <div class="clearfix batas"></div>
-                    <a class="btn btn-small" href="${createLink(action: 'minnehaha')}"><i class="icon-info-sign"></i> More</a>
-                </div>
-                <div class="span3">
-                    <h4>Meet Your Hosts</h4>
-                    <div class="clearfix batas"></div>
-                    <a class="thumbnail">
-                        <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/host_min.jpg" alt="">'; ?>
-                    </a>
-                    <div class="clearfix batas"></div>
+                    <!--        </g:each>-->
+
                     <p>
-                        Anita and Margots believe that by providing accommodations for their guests the way they wish they would when traveling. They are fully committed to doing just that Their greatest satisfaction is to see their guests returning again and again
+                        <a class="btn btn-small" href="${createLink(action: 'testimonial')}"><i class="icon-comment"></i> More</a>
                     </p>
-                    <div class="clearfix batas"></div>
-                    <a class="btn btn-small" href="${createLink(action: 'abouthosts')}"><i class="icon-info-sign"></i> More Info</a>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
