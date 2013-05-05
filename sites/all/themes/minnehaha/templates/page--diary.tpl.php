@@ -41,10 +41,10 @@
                 <div class="pagge">
                     <?php print render($title_prefix); ?>
                     <?php if ($title): ?>
-                        <h2><?php print $title; ?></h2>
+                        <h2>Diary</h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-                    <p><?php if(!empty($page_slogan)){print $page_slogan;} ?></p>
+                    <p>...sharing information about Minnesota</p>
                 </div>
             </div>
             <div class='span9'>
@@ -77,17 +77,11 @@
                 <?php if ($action_links): ?>
                     <ul class="action-links"><?php print render($action_links); ?></ul>
                 <?php endif; ?>
-                <p><?php print $paragraphBeforeFAQs ?></p>
+                <?php print $feed_icons; ?>
                 <?php
-                foreach($listOfFAQ as $key => $question_answer){
-                    print '<ul class="nav nav-list">';
-                    print '<li class="nav-header"> <i class="icon-wrench"></i>'.$question_answer['question'].'</li>';
-                    print '</ul>';
-                    print '<p>'.$question_answer['answer'].'</p>';
-                }
+                hide($content['field_title_description']);
+                print render($page['content']);
                 ?>
-                <p><?php print $paragraphAfterFAQs ?></p>
-
                 <?php print $feed_icons; ?>
             </div>
         </div>
@@ -97,6 +91,3 @@
         <?php print render($page['footer']); ?>
     </div>
 </div><!-- end isi -->
-    <script type="application/javascript">
-        $('.carousel').carousel();
-    </script>

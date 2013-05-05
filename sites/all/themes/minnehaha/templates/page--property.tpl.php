@@ -10,11 +10,23 @@
         </ul>
     </div>
 </div>
+<input type="hidden" id="rentalUnitId" value="<?php print $rentalUnitId; ?>">
+<script>
+    //    @ToDo this need to be moved into cache
+    var propertyTestimonialPhotoMap = Array();
+    <?php
+    foreach($propertyMap as $key=>$property){
+       print 'propertyTestimonialPhotoMap.add({"id":"'.$property['universalId'].'","url":"'.$property['featuredTestimonialPhotoUrl'].'", "alt":"'.$property['featuredTestimonialPhotoAlt'].'"});';
+    }
+    ?>
+    var finalTestimonialMap = propertyTestimonialPhotoMap.groupBy(function(n) {
+        return n.id;
+    });
+</script>
+<?php print '<script src="'.base_path() . path_to_theme() .'/js/review-list.js?v=37"></script>';?>
 <div class="isi">
     <div class="container">
-
         <div class="row">
-
             <?php print render($page['header_logo']); ?>
             <div class="span5 pull-right">
                 <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('class' => array('nav nav-pills')))); ?>
@@ -219,33 +231,36 @@
                 </div>
                 <div class="tab-pane" id="unit-inquiry">
                     <div class="span9">
-                        <?php print render($page['unit_inquiry']); ?>
+                        <div id="inquiry-form">
+                            <div class="message-section">
+                                <div class="alert alert-block">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                </div>
+                            </div>
+                            <input type="hidden" class="rentalUnit" value="<?php print $rentalUnitId; ?>">
+                            <?php print render($page['unit_inquiry']); ?>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane" id="unit-testimonial">
                     <div class="span9">
-                        <g:each var="review" in="${unit?.getReviewsSorted()}">
-                            <g:if test="${review.isApproved}">
-                                <div class="row">
-                                    <div class="span3">
-                                        <img alt="" class="img-circle" src="${createLinkTo(dir: review.imgUrl.tokenize('/')[0..-2].join('/').toLowerCase(), file: review.imgUrl.tokenize('/')[-1])}">
-                                    </div>
-                                    <div class="span6">
-                                        <blockquote>
-                                            <p>${review.content} </p>
-                                            <small>${review.submittedBy} ${review.dateReceived.toString("MMM d, yyyy")}</small>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                                <hr>
-                            </g:if>
-                        </g:each>
+                        <div id="testimonial-list">
+                            <!-- testimonials are appended here -->
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="tab-pane" id="leave-testimonial">
                     <div class="span9">
-                        <?php print render($page['leave_testimonial']); ?>
+                        <div id="testimonial-form">
+                            <div class="message-section">
+                                <div class="alert alert-block">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                </div>
+                            </div>
+                            <input type="hidden" class="rentalUnit" value="<?php print $rentalUnitId; ?>">
+                            <?php print render($page['leave_testimonial']); ?>
+                       </div>
                     </div>
                 </div>
             </div>

@@ -132,6 +132,3 @@
         <?php print render($page['footer']); ?>
     </div>
 </div><!-- end isi -->
-    <script type="application/javascript">
-        $('.carousel').carousel();
-    </script>

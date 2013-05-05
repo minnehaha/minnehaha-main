@@ -45,7 +45,18 @@ if (!empty($node)){
 
 }
 ?>
-<?php //print render($page['sticky_property_menu']); ?>
+<div class="ganti-warna">
+    <div class="pilihan-warna">
+        <ul>
+            <?php
+            foreach($propertyMap as $key => $rental_unit){
+                $indexOfHyphen = strrpos($rental_unit['title'],'-') + 1;
+                print '<li><a href="'.$rental_unit['url'].'">'.substr($rental_unit['title'],0,$indexOfHyphen).'<span style="display:block;margin-left: 25px;margin-top: -5px">'.substr($rental_unit['title'],$indexOfHyphen).'</span></a></li>';
+            }
+            ?>
+        </ul>
+    </div>
+</div>
 <div class="isi">
     <div class="container">
 

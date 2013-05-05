@@ -3,22 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php print '<link href="'.base_path() . path_to_theme() .'css/telex.woff" rel="stylesheet" type="text/css">'; ?>
-<!--    @font-face {-->
-<!--    font-family: 'eurofurence light';-->
-<!--    font-style: normal;-->
-<!--    font-weight: lighter;-->
-<!--    src: local('Eurofurence Light'), local('Eurofurence-Light'), url('content/font/EUROF.ttf') format('ttf');-->
-<!--    }-->
-<!---->
-<!--    @font-face {-->
-<!--    font-family: 'Segoe UI';-->
-<!--    font-style: normal;-->
-<!--    font-weight: lighter;-->
-<!--    src: local('Segoe UI'), local('Segoe-UI'), url('content/font/telex.woff') format('woff');-->
-<!--    }-->
+<!--    --><?php //print '<link href="'.base_path() . path_to_theme() .'css/telex.woff" rel="stylesheet" type="text/css">'; ?>
   <?php print $head; ?>
   <title><?php print $head_title; ?></title>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
   <?php print $styles; ?>
   <?php print $scripts; ?>
   <!-- HTML5 element support for IE6-8 -->

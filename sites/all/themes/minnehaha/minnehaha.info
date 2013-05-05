@@ -18,6 +18,7 @@ regions[header_logo]    = 'Header Logo'
 regions[other_menu]          = 'Other Menu'
 regions[leave_testimonial]          = 'Leave Testimonial'
 regions[unit_inquiry]          = 'Unit Inquiry'
+regions[diary_list_front] = "Diary Front Page"
 
 stylesheets[all][] = css/type.css
 stylesheets[all][] = css/style.css
@@ -26,7 +27,9 @@ stylesheets[all][] = css/style.css
 ;stylesheets[all][] = css/main.css
 
 ; JS
+scripts[] = js/sugar-1.3.9.min.js
 scripts[] = js/application.js
+scripts[] = js/socket-minnehaha.js
 
 settings[toggle_name] = 0
 settings[toggle_search] = 1

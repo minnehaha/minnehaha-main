@@ -1,4 +1,28 @@
-<?php //print render($page['property_menu']); ?>
+<div class="ganti-warna">
+    <div class="pilihan-warna">
+        <ul>
+            <?php
+            foreach($propertyMap as $key => $rental_unit){
+                $indexOfHyphen = strrpos($rental_unit['title'],'-') + 1;
+                print '<li><a href="'.$rental_unit['url'].'">'.substr($rental_unit['title'],0,$indexOfHyphen).'<span style="display:block;margin-left: 25px;margin-top: -5px">'.substr($rental_unit['title'],$indexOfHyphen).'</span></a></li>';
+            }
+            ?>
+        </ul>
+    </div>
+</div>
+<script>
+    //    @ToDo this need to be moved into cache
+    var propertyTestimonialPhotoMap = Array();
+    <?php
+    foreach($propertyMap as $key=>$property){
+       print 'propertyTestimonialPhotoMap.add({"id":"'.$property['universalId'].'","url":"'.$property['featuredTestimonialPhotoUrl'].'", "alt":"'.$property['featuredTestimonialPhotoAlt'].'"});';
+    }
+    ?>
+    var finalTestimonialMap = propertyTestimonialPhotoMap.groupBy(function(n) {
+        return n.id;
+    });
+</script>
+<?php print '<script src="'.base_path() . path_to_theme() .'/js/featured-review-list.js?v=19"></script>';?>
 <div class="isi">
     <div class="container">
 
@@ -21,7 +45,7 @@
                 <div class="item  active">
                     <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/slide_1.jpg" alt="">'; ?>
                     <div class="carousel-caption">
-                        <h4>Elegance in design</h4>
+                        <h2>Elegance in design</h2>
                         <p>Elegantly furnished to ensure a comfortable and quality furnished home experience </p>
                     </div>
                 </div>
@@ -93,31 +117,21 @@
                     ?>
                 </div>
                 <div class="span6 sticker">
-                    <h1 class="subjudul">Located South Minneapolis</h1>
+                    <h1 class="subjudul">Minnehaha Lofts Diary</h1>
+
+                    <?php print render($page['diary_list_front']);?>
                     <p>
-                        We provide accommodation in a beautiful part of Minneapolis near Lake Nokomis and the Missisipi River. While being near so many attractions and downtown, you still have your privacy and sense of home. Light rail service few blocks away making it convenient  to commute. A nearby bike trail makes it easy to explore this beautiful city ...
-                    </p>
-                    <p>
-                        <a class="btn btn-small" href="#"><i class="icon-asterisk"></i> More on Location & Map</a>
+                        <a class="btn btn-small" href="/diary"><i class="icon-asterisk"></i> Read All</a>
                     </p>
                 </div>
                 <div class="span5 sticker">
-                    <h5><i class="  icon-comment jarak-kecil"></i> Testimonial</h5>
+                    <h5><i class=" icon-comment jarak-kecil"></i> Testimonial</h5>
                     <br />
-                    <!--        <g:each var="featuredReview" in="${company.featuredReviews}">-->
-                    <p>
-                    <div class="span3">
-                        <!--                <img src="${createLinkTo(dir: featuredReview.imgUrl.tokenize('/')[0..-2].join('/').toLowerCase(), file: featuredReview.imgUrl.tokenize('/')[-1])}" class="span2 img-circle"  alt="">-->
-                        <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/sydney_min.jpg" alt="">'; ?>
+                    <div id="testimonial-list">
+                        <!-- testimonials are appended here -->
                     </div>
-                    <blockquote >${featuredReview.content}
-                        <small>${featuredReview.submittedBy} ${featuredReview.dateReceived.toString("MMM d, yyyy")}</small>
-                    </blockquote>
-                    </p>
-                    <!--        </g:each>-->
-
                     <p>
-                        <a class="btn btn-small" href="${createLink(action: 'testimonial')}"><i class="icon-comment"></i> More</a>
+                        <?php print '<a class="btn btn-small" href="'.$testimonialUrl.'"><i class="icon-comment"></i> More</a>';?>
                     </p>
                 </div>
             </div>
@@ -140,18 +154,9 @@
     <div class="span6">
         <h5><i class="  icon-comment jarak-kecil"></i> Testimonial</h5>
         <br />
-<!--        <g:each var="featuredReview" in="${company.featuredReviews}">-->
-            <p>
-            <div class="span3">
-<!--                <img src="${createLinkTo(dir: featuredReview.imgUrl.tokenize('/')[0..-2].join('/').toLowerCase(), file: featuredReview.imgUrl.tokenize('/')[-1])}" class="span2 img-circle"  alt="">-->
-                <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/sydney_min.jpg" alt="">'; ?>
-            </div>
-            <blockquote >${featuredReview.content}
-                <small>${featuredReview.submittedBy} ${featuredReview.dateReceived.toString("MMM d, yyyy")}</small>
-            </blockquote>
-            </p>
-<!--        </g:each>-->
-
+        <div id="testimonial-list">
+            <!-- testimonials are appended here -->
+        </div>
         <p>
             <a class="btn btn-small" href="${createLink(action: 'testimonial')}"><i class="icon-comment"></i> More</a>
         </p>
@@ -166,5 +171,6 @@
     </div>
 </div><!-- end isi -->
     <script type="application/javascript">
-        $('.carousel').carousel();
+//        $('.carousel').carousel();
+        jQuery('.carousel').carousel();
     </script>

@@ -10,6 +10,19 @@
         </ul>
     </div>
 </div>
+<script>
+    //    @ToDo this need to be moved into cache
+    var propertyTestimonialPhotoMap = Array();
+    <?php
+    foreach($propertyMap as $key=>$property){
+       print 'propertyTestimonialPhotoMap.add({"id":"'.$property['universalId'].'","url":"'.$property['featuredTestimonialPhotoUrl'].'", "alt":"'.$property['featuredTestimonialPhotoAlt'].'"});';
+    }
+    ?>
+    var finalTestimonialMap = propertyTestimonialPhotoMap.groupBy(function(n) {
+        return n.id;
+    });
+</script>
+<?php print '<script src="'.base_path() . path_to_theme() .'/js/review-list.js?v=37"></script>';?>
 <div class="isi">
     <div class="container">
 
@@ -25,13 +38,13 @@
         <div class="row">
             <div class="span12 batas"></div>
             <div class="clearfix"></div>
-                <g:render template="top_messaging"/>
+            <g:render template="top_messaging"/>
             <div class="span12">
                 <ul class="breadcrumb">
                     <li>
                         <a href="/">Home</a> <span class="divider">/</span>
                     </li>
-                    <li class="active"><?php print $title; ?></li>
+                    <li class="active">Guest Account</li>
                 </ul>
             </div>
         </div>
@@ -41,10 +54,10 @@
                 <div class="pagge">
                     <?php print render($title_prefix); ?>
                     <?php if ($title): ?>
-                        <h2><?php print $title; ?></h2>
+                        <h2>Guest Account</h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-                    <p><?php if(!empty($page_slogan)){print $page_slogan;} ?></p>
+                    <p>...guest login and profile information</p>
                 </div>
             </div>
             <div class='span9'>
@@ -60,7 +73,7 @@
 
         <div class="row">
             <div class="span3">
-<!--                --><?php //print render($page['property_menu']); ?>
+                <!--                --><?php //print render($page['property_menu']); ?>
                 <ul class="nav nav-list">
                     <li class="nav-header">Locations</li>
                     <?php
@@ -73,22 +86,21 @@
                 <?php print render($page['other_menu']); ?>
             </div>
             <div class="span9">
-                <?php if ($tabs): ?><?php print render($tabs); ?><?php endif; ?>
-                <?php if ($action_links): ?>
-                    <ul class="action-links"><?php print render($action_links); ?></ul>
-                <?php endif; ?>
-                <p><?php print $paragraphBeforeFAQs ?></p>
-                <?php
-                foreach($listOfFAQ as $key => $question_answer){
-                    print '<ul class="nav nav-list">';
-                    print '<li class="nav-header"> <i class="icon-wrench"></i>'.$question_answer['question'].'</li>';
-                    print '</ul>';
-                    print '<p>'.$question_answer['answer'].'</p>';
-                }
-                ?>
-                <p><?php print $paragraphAfterFAQs ?></p>
-
-                <?php print $feed_icons; ?>
+                    <?php if (!empty($page['highlighted'])): ?>
+                        <div class="highlighted hero-unit"><?php print render($page['highlighted']); ?></div>
+                    <?php endif; ?>
+                    <a id="main-content"></a>
+                    <?php print $messages; ?>
+                    <?php if (!empty($tabs)): ?>
+                        <?php print render($tabs); ?>
+                    <?php endif; ?>
+                    <?php if (!empty($page['help'])): ?>
+                        <div class="well"><?php print render($page['help']); ?></div>
+                    <?php endif; ?>
+                    <?php if (!empty($action_links)): ?>
+                        <ul class="action-links"><?php print render($action_links); ?></ul>
+                    <?php endif; ?>
+                    <?php print render($page['content']); ?>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -97,6 +109,3 @@
         <?php print render($page['footer']); ?>
     </div>
 </div><!-- end isi -->
-    <script type="application/javascript">
-        $('.carousel').carousel();
-    </script>

@@ -5,10 +5,12 @@
     position:fixed;
     left:0px;
     top: 0px;
-    width:150px;
-    height:165px;
-    z-index:99999999999;
-    background:url('../img/minnehaha/theme-select3.png') fixed no-repeat;
+    width:110px;
+    /*height:165px;*/
+    z-index:2;
+    background-color: #e6e6e6;
+    background-image: url('../img/minnehaha/available-header.gif');
+    background-repeat:no-repeat;
 }
 
 .icon-twitter {
@@ -314,4 +316,53 @@
 
 span.mn-help-inline{
     height: 12px;
+}
+
+.alert{
+    display: none;
+}
+
+/****Comment Custome Style****/
+
+.comment .submitted{
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+.comment{
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    margin:10px;
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.comment .links{
+    display:none;
+}
+
+.comment .permalink{
+    display:none;
+}
+
+#comment-body-add-more-wrapper fieldset{
+    display:none;
+}
+
+#comments .title{
+    color: #999999;
+    opacity: 0.7;
+}
+
+.comment-form .form-type-item, .comment-form .form-item-subject {
+    display:none;
 }

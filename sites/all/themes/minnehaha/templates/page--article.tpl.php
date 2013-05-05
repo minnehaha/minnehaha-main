@@ -41,10 +41,10 @@
                 <div class="pagge">
                     <?php print render($title_prefix); ?>
                     <?php if ($title): ?>
-                        <h2><?php print $title; ?></h2>
+                        <h2>Diary</h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-                    <p><?php if(!empty($page_slogan)){print $page_slogan;} ?></p>
+                    <p>...sharing information about Minnesota</p>
                 </div>
             </div>
             <div class='span9'>
@@ -77,18 +77,42 @@
                 <?php if ($action_links): ?>
                     <ul class="action-links"><?php print render($action_links); ?></ul>
                 <?php endif; ?>
-                <p><?php print $paragraphBeforeFAQs ?></p>
+                <?php print $feed_icons; ?>
+                <div class="pagge"><h2><?php print $title; ?></h2></div>
+                <p>
+                    <?php if(!empty($basicPagePars[0])){print $basicPagePars[0];}?>
+                </p>
+                <div class="row">
+                    <div class="span3">
+                    <?php if(!empty($basicPagePars[1])){print $basicPagePars[1];}?>
+                    </div>
+                   <?php
+                   if(!empty($basicPagePhotos)){
+                        foreach($basicPagePhotos as $key=>$pagePhoto){
+                            print '<div class="span3">';
+                                print '<div class="thumbnail">';
+                                    print '<img src="'.$pagePhoto['contentPhotoImgUrl'].'" alt="'.$pagePhoto['contentPhotoImgAlt'].'">';
+                                    print '<div class="caption">';
+                                        print '<h5>'.$pagePhoto['contentPhotoTitle'].' </h5>';
+                                        print '<p>'.$pagePhoto['contentPhotoDescription'].'</p>';
+                                    print '</div>';
+                                print '</div>';
+                            print '</div>';
+                        }
+                   }?>
+                </div>
+                <br>
                 <?php
-                foreach($listOfFAQ as $key => $question_answer){
-                    print '<ul class="nav nav-list">';
-                    print '<li class="nav-header"> <i class="icon-wrench"></i>'.$question_answer['question'].'</li>';
-                    print '</ul>';
-                    print '<p>'.$question_answer['answer'].'</p>';
+                if(!empty($basicPagePars[2])){
+                    $sizeOfPars = count($basicPagePars);
+                    for ($i=2; $sizeOfPars>=$i; $i++)
+                        {
+                        print '<p>'.$basicPagePars[$i].'</p>';
+                    }
                 }
                 ?>
-                <p><?php print $paragraphAfterFAQs ?></p>
-
-                <?php print $feed_icons; ?>
+                <hr>
+                <?php print render($page['content']); ?>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -97,6 +121,3 @@
         <?php print render($page['footer']); ?>
     </div>
 </div><!-- end isi -->
-    <script type="application/javascript">
-        $('.carousel').carousel();
-    </script>

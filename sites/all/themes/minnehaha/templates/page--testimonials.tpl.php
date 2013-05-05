@@ -10,6 +10,19 @@
         </ul>
     </div>
 </div>
+<script>
+//    @ToDo this need to be moved into cache
+    var propertyTestimonialPhotoMap = Array();
+    <?php
+    foreach($propertyMap as $key=>$property){
+       print 'propertyTestimonialPhotoMap.add({"id":"'.$property['universalId'].'","url":"'.$property['featuredTestimonialPhotoUrl'].'", "alt":"'.$property['featuredTestimonialPhotoAlt'].'"});';
+    }
+    ?>
+    var finalTestimonialMap = propertyTestimonialPhotoMap.groupBy(function(n) {
+        return n.id;
+    });
+</script>
+ <?php print '<script src="'.base_path() . path_to_theme() .'/js/review-list.js?v=37"></script>';?>
 <div class="isi">
     <div class="container">
 
@@ -31,7 +44,7 @@
                     <li>
                         <a href="/">Home</a> <span class="divider">/</span>
                     </li>
-                    <li class="active"><?php print $title; ?></li>
+                    <li class="active">Testimonial</li>
                 </ul>
             </div>
         </div>
@@ -77,17 +90,9 @@
                 <?php if ($action_links): ?>
                     <ul class="action-links"><?php print render($action_links); ?></ul>
                 <?php endif; ?>
-                <p><?php print $paragraphBeforeFAQs ?></p>
-                <?php
-                foreach($listOfFAQ as $key => $question_answer){
-                    print '<ul class="nav nav-list">';
-                    print '<li class="nav-header"> <i class="icon-wrench"></i>'.$question_answer['question'].'</li>';
-                    print '</ul>';
-                    print '<p>'.$question_answer['answer'].'</p>';
-                }
-                ?>
-                <p><?php print $paragraphAfterFAQs ?></p>
-
+                    <div id="testimonial-list">
+                        <!-- testimonials are appended here -->
+                    </div>
                 <?php print $feed_icons; ?>
             </div>
         </div>
@@ -97,6 +102,3 @@
         <?php print render($page['footer']); ?>
     </div>
 </div><!-- end isi -->
-    <script type="application/javascript">
-        $('.carousel').carousel();
-    </script>

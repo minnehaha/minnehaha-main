@@ -21,20 +21,48 @@ function minnehaha_preprocess_page(&$vars, $hook) {
         $featuredPhoto = $value->field_featured_photo;
         $propertyMap[ $i ]['featuredPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredPhoto['und'][0]['uri']), array('absolute'=>true));
         $propertyMap[ $i ]['featuredPhotoAlt'] = $value->field_featured_photo['und'][0]['alt'];
+        $featuredTestimonialPhoto = $value->field_featured_review_photo;
+        $propertyMap[ $i ]['featuredTestimonialPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredTestimonialPhoto['und'][0]['uri']), array('absolute'=>true));
+        $propertyMap[ $i ]['featuredTestimonialPhotoAlt'] = $value->field_featured_review_photo['und'][0]['alt'];
         $fieldParagraphAboutProperty = $value->field_paragraph_about_property;
         $propertyMap[ $i ]['summary'] = $fieldParagraphAboutProperty['und'][0]['value'];
+        $propertyMap[ $i ]['universalId'] = $value->field_rental_unit_id['und'][0]['value'];
         $i++;
     }
     $vars['propertyMap'] = $propertyMap;
 
     //about hosts for front page
-    $aboutHosts = node_load(17);
+    $aboutHosts = node_load(17);//@ToDo find way to dynamically get id for basic page - About Host
     $hostsCollection = array();
     $hostsCollection['summary'] = $aboutHosts->field_paragraph_of_content['und'][0]['value'];
     $hostsCollection['url'] = drupal_get_path_alias("node/17");
     $hostsCollection['imgUrl'] = url('sites/default/files/'.file_uri_target($aboutHosts->field_basic_page_featured_photo['und'][0]['uri']), array('absolute'=>true));
     $hostsCollection['imgAlt'] = $aboutHosts->field_basic_page_featured_photo['und'][0]['alt'];
     $vars['aboutHost'] = $hostsCollection;
+
+    //Testimonial page
+    $testimonialId = db_select('node', 'n')
+        ->fields('n', array('nid'))
+        ->fields('n', array('type'))
+        ->condition('n.type', 'testimonials')
+        ->execute()
+        ->fetchCol();
+    $testimonialUrl = drupal_get_path_alias("node/$testimonialId[0]");
+    $vars['testimonialUrl'] = $testimonialUrl;
+
+    //default header background image
+    $basicPageId = db_select('node', 'n')
+        ->fields('n', array('nid'))
+        ->fields('n', array('type'))
+        ->condition('n.type', 'page')
+        ->execute()
+        ->fetchCol();
+    $basicPageNode = node_load($basicPageId);
+    $fieldHeaderBkIma = field_get_items('node', $basicPageNode, 'field_header_background_image');
+    if ($fieldHeaderBkIma){
+        $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
+    }
+
 
     if (isset($vars['node'])) {
         $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
@@ -44,6 +72,15 @@ function minnehaha_preprocess_page(&$vars, $hook) {
                 break;
             case "faq_page":
                 minnehaha_preprocess_faq_page($vars, $hook);
+                break;
+            case "testimonials":
+                minnehaha_preprocess_testimonials($vars, $hook);
+                break;
+            case "article":
+                minnehaha_preprocess_article($vars, $hook);
+                break;
+            case "user":
+                minnehaha_preprocess_user($vars, $hook);
                 break;
             default:
                 minnehaha_preprocess_basic_page($vars, $hook);
@@ -134,6 +171,11 @@ function minnehaha_preprocess_property(&$vars, $hook, $propertyMap) {
     //@ToDo: this is not called by Drupal,but, perhaps, it should. Temp solution manually calling from 'minnehaha_preprocess_page'
     $node = $vars['node'];
 
+    $propertyUniversalId =  $node->field_rental_unit_id;
+    if ($propertyUniversalId){
+        $vars['rentalUnitId'] = $propertyUniversalId['und'][0]['value'];
+    }
+
     $fieldPropertyCharacter =  $node->field_property_character;
     if ($fieldPropertyCharacter){
         $vars['property_character'] = $fieldPropertyCharacter['und'][0]['value'];
@@ -210,4 +252,58 @@ function minnehaha_preprocess_property(&$vars, $hook, $propertyMap) {
         }
     }
     $vars['propertyMapWithoutOne'] = $otherProperty;
+}
+
+function minnehaha_preprocess_testimonials(&$vars, $hook){
+    $node = $vars['node'];
+
+    $fieldTestimonialSlogan = $node->field_page_slogan_testimonial;
+    if ($fieldTestimonialSlogan){
+        $vars['page_slogan'] = $fieldTestimonialSlogan['und'][0]['value'];
+    }
+    $fieldTestimonialHeaderBgImg = field_get_items('node', $vars['node'], 'field_header_bg_image_testimonia');
+    if ($fieldTestimonialHeaderBgImg){
+        $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldTestimonialHeaderBgImg[0]['uri']), array('absolute'=>true));
+    }
+
+}
+
+function minnehaha_preprocess_article(&$vars, $hook){
+    $node = $vars['node'];
+
+    $articleHeaderBgImg = field_get_items('node', $vars['node'], 'field_article_header_bg_img');
+    if ($articleHeaderBgImg){
+        $vars['image_url'] = url('sites/default/files/'.file_uri_target($articleHeaderBgImg[0]['uri']), array('absolute'=>true));
+    }
+
+    $fieldParagraphOfContent = field_get_items('node', $node, 'field_paragraph_of_article');
+    $sizeOfParagraphs = count($fieldParagraphOfContent);
+    $basicParagraphs = array();
+    for ($i = 0; $sizeOfParagraphs > $i; $i++)
+    {
+        $basicParagraphs[$i] = $fieldParagraphOfContent[$i]['value'];
+    }
+    $vars['basicPagePars'] = $basicParagraphs;
+
+    $fieldContentPhotos = field_get_items('node', $node, 'field_article_content_photo');
+    $basicPagePhotos = array();
+    for($i = 0; $i < count($fieldContentPhotos); $i++){
+        $contentPhoto = node_load($fieldContentPhotos[$i]['target_id']);
+        $basicPagePhotos[$i]['contentPhotoTitle'] = $contentPhoto->field_photo_title['und'][0]['value'];
+        $basicPagePhotos[$i]['contentPhotoDescription'] = $contentPhoto->field_photo_description['und'][0]['value'];
+        $contentPhotoImage = $contentPhoto->field_image_file;
+        $basicPagePhotos[$i]['contentPhotoImgUrl'] = url('sites/default/files/'.file_uri_target($contentPhotoImage['und'][0]['uri']), array('absolute'=>true));
+        $basicPagePhotos[$i]['contentPhotoImgAlt'] = $contentPhotoImage['und'][0]['alt'];
+    }
+    if(!empty($basicPagePhotos)){$vars['basicPagePhotos'] = $basicPagePhotos;}else{$vars['basicPagePhotos'] = 'empty';}
+
+}
+
+function minnehaha_preprocess_user(&$vars, $hook){
+    $node = $vars['node'];
+    $fieldHeaderBkIma = field_get_items('node', $node, 'field_header_background_image');
+    if ($fieldHeaderBkIma){
+        $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
+    }
+
 }
