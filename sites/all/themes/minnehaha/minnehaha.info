@@ -19,6 +19,7 @@ regions[other_menu]          = 'Other Menu'
 regions[leave_testimonial]          = 'Leave Testimonial'
 regions[unit_inquiry]          = 'Unit Inquiry'
 regions[diary_list_front] = "Diary Front Page"
+regions[article_menu] = "Article Menu"
 
 stylesheets[all][] = css/type.css
 stylesheets[all][] = css/style.css

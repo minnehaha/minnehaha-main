@@ -308,6 +308,11 @@
     font-size: 0.9em;
 }
 
+.mutedMin-article{
+    font-size: 0.8em;
+    display:inline;
+}
+
 .mutedMin input{
     height: 12px;
     margin-top: 15px;
@@ -365,4 +370,8 @@ span.mn-help-inline{
 
 .comment-form .form-type-item, .comment-form .form-item-subject {
     display:none;
+}
+
+.featured-testimonials div{
+    margin-right: 10px;
 }
