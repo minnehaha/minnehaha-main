@@ -25,7 +25,6 @@
         <div class="row">
             <div class="span12 batas"></div>
             <div class="clearfix"></div>
-                <g:render template="top_messaging"/>
             <div class="span12">
                 <ul class="breadcrumb">
                     <li>

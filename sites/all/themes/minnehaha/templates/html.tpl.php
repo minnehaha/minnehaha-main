@@ -6,7 +6,7 @@
 <!--    --><?php //print '<link href="'.base_path() . path_to_theme() .'css/telex.woff" rel="stylesheet" type="text/css">'; ?>
   <?php print $head; ?>
   <title><?php print $head_title; ?></title>
-  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <?php print '<script src="http://'.$interfaceConfig['driver_url'].':'.$interfaceConfig['driver_port'].'/socket.io/socket.io.js"></script>';?>
   <?php print $styles; ?>
   <?php print $scripts; ?>
   <!-- HTML5 element support for IE6-8 -->

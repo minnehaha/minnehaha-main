@@ -45,21 +45,21 @@
                 <div class="item  active">
                     <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/slide_1.jpg" alt="">'; ?>
                     <div class="carousel-caption">
-                        <h2>Elegance in design</h2>
+                        <h2>Elegance in Design</h2>
                         <p>Elegantly furnished to ensure a comfortable and quality furnished home experience </p>
                     </div>
                 </div>
                 <div class="item">
                     <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/slide_2.jpg" alt="">'; ?>
                     <div class="carousel-caption">
-                        <h4>Charm</h4>
+                        <h2>Charm</h2>
                         <p>Restoring its original beauty while attaching today's craftsman touch brings a charm to our places that will please you at every moment</p>
                     </div>
                 </div>
                 <div class="item">
                     <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/slide_4.jpg" alt="">'; ?>
                     <div class="carousel-caption">
-                        <h4>Feel of Home</h4>
+                        <h2>Feel of Home</h2>
                         <p>Furnished with everything one may wish, with your own back yard while located in lovely south minneapolis neighborhood adds a feel of home while away</p>
                     </div>
                 </div>

@@ -1,7 +1,36 @@
 <?php
+function minnehaha_preprocess_html(&$vars, $hook) {
+    global $conf;
+    // Return nid of nodes of type "interface_configuraitons".
+    $nid_config = db_select('node', 'n')
+        ->fields('n', array('nid'))
+        ->fields('n', array('type'))
+        ->condition('n.type', 'interface_configurations')
+        ->execute()
+        ->fetchCol();
+    //load the configurations
+    $configurationNode = node_load($nid_config);
+    $interfaceConfig = array();
+
+    if(!empty($configurationNode->field_driver_url['und'][0]['value'])){
+        //if set by user
+        $interfaceConfig['driver_url'] = $configurationNode->field_driver_url['und'][0]['value'];
+    }else{
+        //hard coded in default/settings.php
+        $interfaceConfig['driver_url'] = $conf['global_driver_url'];
+    }
+    if(!empty($configurationNode->field_driver_port['und'][0]['value'])){
+        //if set by user
+        $interfaceConfig['driver_port'] = $configurationNode->field_driver_port['und'][0]['value'];
+    }else{
+        //hard coded in default/settings.php
+        $interfaceConfig['driver_port'] = $conf['global_driver_port'];
+    }
+
+        $vars['interfaceConfig'] = $interfaceConfig;
+}
+
 function minnehaha_preprocess_page(&$vars, $hook) {
-
-
     // Return all nids of nodes of type "property".
     $nids = db_select('node', 'n')
         ->fields('n', array('nid'))
@@ -10,7 +39,7 @@ function minnehaha_preprocess_page(&$vars, $hook) {
         ->execute()
         ->fetchCol(); // returns an indexed array
 
-    // Now return the node objects.
+    //return the property node objects.
     $properties = node_load_multiple($nids);
     $propertyMap = array();
     $i = 0;
