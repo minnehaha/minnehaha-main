@@ -1,84 +1,22 @@
-
-<?php
-//retrieving values @ToDo move into preprocessor
-if (!empty($node)){
-
-    $fieldHeaderBkIma = field_get_items('node', $node, 'field_contact_header_background');
-    if ($fieldHeaderBkIma){
-        $image_url = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
-    }
-
-    $fieldPageSlogan = field_get_items('node', $node, 'field_contuct_us_page_slogan');
-    if ($fieldPageSlogan){
-        $page_slogan = $fieldPageSlogan[0]['value'];
-    }
-
-    $fieldPhoneNumber = field_get_items('node', $node, 'field_phone_number');
-    if ($fieldPhoneNumber){
-        $phone_number = $fieldPhoneNumber[0]['value'];
-    }
-
-    $fieldStreetAddress = field_get_items('node', $node, 'field_street_address');
-    if ($fieldStreetAddress){
-        $street_address = $fieldStreetAddress[0]['value'];
-    }
-
-    $fieldCity = field_get_items('node', $node, 'field_city');
-    if ($fieldCity){
-        $city = $fieldCity[0]['value'];
-    }
-
-    $fieldState = field_get_items('node', $node, 'field_state');
-    if ($fieldState){
-        $state = $fieldState[0]['value'];
-    }
-
-    $fieldZipCode = field_get_items('node', $node, 'field_zip_code');
-    if ($fieldZipCode){
-        $zip_code = $fieldZipCode[0]['value'];
-    }
-
-    $fieldZipCode = field_get_items('node', $node, 'field_zip_code');
-    if ($fieldZipCode){
-        $zip_code = $fieldZipCode[0]['value'];
-    }
-
-}
-?>
 <div class="ganti-warna">
-    <div class="pilihan-warna">
-        <ul>
-            <?php
-            foreach($propertyMap as $key => $rental_unit){
-                $indexOfHyphen = strrpos($rental_unit['title'],'-') + 1;
-                print '<li><a href="'.$rental_unit['url'].'">'.substr($rental_unit['title'],0,$indexOfHyphen).'<span style="display:block;margin-left: 25px;margin-top: -5px">'.substr($rental_unit['title'],$indexOfHyphen).'</span></a></li>';
-            }
-            ?>
-        </ul>
-    </div>
+    <?php include './'. path_to_theme() .'/templates/section--sticky-property-menu.php';?>
 </div>
 <div class="isi">
     <div class="container">
 
         <div class="row">
-
-            <?php print render($page['header_logo']); ?>
-            <div class="span5 pull-right">
-                <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('class' => array('nav nav-pills')))); ?>
-
-            </div>
+            <?php include './'. path_to_theme() .'/templates/section--header.php';?>
         </div>
 
         <div class="row">
             <div class="span12 batas"></div>
             <div class="clearfix"></div>
-                <g:render template="top_messaging"/>
             <div class="span12">
                 <ul class="breadcrumb">
                     <li>
                         <a href="${createLink(action: 'home')}">Home</a> <span class="divider">/</span>
                     </li>
-                    <li class="active">About</li>
+                    <li class="active"><?php print $title; ?></li>
                 </ul>
             </div>
         </div>
@@ -132,42 +70,7 @@ if (!empty($node)){
         <div class="clearfix"></div>
     </div><!-- end container -->
     <div class="footers">
-        <div class="container">
-            <div class="row">
-                <div class="span4">
-                    <h2>Minnehaha<i>Lofts</i></h2>
-                </div>
-                <div class="span4">
-                    <h2><i class="icon-globe icon-white jarak-kecil"></i>Social Networking</h2>
-                    <p>
-                        <i class="icon-twitter icon-white"></i> <a href="https://twitter.com/minnehahalofts" target="_blank">Follow Us on Twitter</a><i></i>
-                    </p>
-                    <p>
-                        <i class="icon-fb icon-white"></i> <a href="http://www.facebook.com/minnehahalofts" target="_blank">MinnehahaLofts on Facebook</a>
-                    </p>
-                    <p>
-                        <i class="icon-gp icon-white"></i> <a href="https://plus.google.com/u/0/b/100411277821392796298/100411277821392796298/posts" target="_blank">MinnehahaLofts on Google+</a>
-                    </p>
-                </div>
-                <div class="span4">
-                    <div id="inquiry-form-small">
-                        <div class="message-section">
-                            <div class="alert alert-block">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                            </div>
-                        </div>
-                        <h2><i class="icon-envelope icon-white jarak-kecil"></i>Inquire</h2>
-                        <p><textarea rows="3" id="inqContent" name="inqContent">Type your inquiry here.</textarea></p>
-                        <div class="input-prepend">
-                            <span class="add-on">E-Mail</span><input class="span2" id="userEmail" name="userEmail" size="16" type="text" >
-                            <a class="btn btn-success" id="submitInq" href="#"><i class="icon-ok icon-white"></i>Inquire</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr />
-            <footer><p>copyright <span class="minilogo">&nbsp;Minnehaha<i>Lofts</i></span> &copy; 2012. Created by : <a href="http://www.kapasoft.com">KapaSoft</a></p</footer>
-        </div>
+        <?php include './'. path_to_theme() .'/templates/section--footer.php';?>
     </div>
 </div><!-- end isi -->
 
