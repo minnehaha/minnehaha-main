@@ -111,6 +111,9 @@ function minnehaha_preprocess_page(&$vars, $hook) {
             case "user":
                 minnehaha_preprocess_user($vars, $hook);
                 break;
+            case "contact_us":
+                minnehaha_preprocess_contactus($vars, $hook);
+                break;
             default:
                 minnehaha_preprocess_basic_page($vars, $hook);
                 break;
@@ -335,4 +338,52 @@ function minnehaha_preprocess_user(&$vars, $hook){
         $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
     }
 
+}
+
+function minnehaha_preprocess_contactus(&$vars, $hook){
+    $node = $vars['node'];
+    if (!empty($node)){
+
+        $fieldHeaderBkIma = field_get_items('node', $node, 'field_contact_header_background');
+        if ($fieldHeaderBkIma){
+            $image_url = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
+            $vars['image_url'] = $image_url;
+        }
+
+        $fieldPageSlogan = field_get_items('node', $node, 'field_contuct_us_page_slogan');
+        if ($fieldPageSlogan){
+            $page_slogan = $fieldPageSlogan[0]['value'];
+            $vars['page_slogan'] = $page_slogan;
+        }
+
+        $fieldPhoneNumber = field_get_items('node', $node, 'field_phone_number');
+        if ($fieldPhoneNumber){
+            $phone_number = $fieldPhoneNumber[0]['value'];
+            $vars['phone_number'] = $phone_number;
+        }
+
+        $fieldStreetAddress = field_get_items('node', $node, 'field_street_address');
+        if ($fieldStreetAddress){
+            $street_address = $fieldStreetAddress[0]['value'];
+            $vars['street_address'] = $street_address;
+        }
+
+        $fieldCity = field_get_items('node', $node, 'field_city');
+        if ($fieldCity){
+            $city = $fieldCity[0]['value'];
+            $vars['city'] = $city;
+        }
+
+        $fieldState = field_get_items('node', $node, 'field_state');
+        if ($fieldState){
+            $state = $fieldState[0]['value'];
+            $vars['state'] = $state;
+        }
+
+        $fieldZipCode = field_get_items('node', $node, 'field_zip_code');
+        if ($fieldZipCode){
+            $zip_code = $fieldZipCode[0]['value'];
+            $vars['zip_code'] = $zip_code;
+        }
+    }
 }
