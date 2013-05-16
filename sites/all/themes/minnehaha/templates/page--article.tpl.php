@@ -45,18 +45,8 @@
 
         <div class="row">
             <div class="span3">
-<!--                --><?php //print render($page['property_menu']); ?>
                 <ul class="nav nav-list">
-                    <li class="nav-header">Articles</li>
-                    <?php print render($page['article_menu']); ?>
-                    <li class="divider"></li>
-                    <li class="nav-header">Locations</li>
-                    <?php
-                    foreach($propertyMap as $key => $rental_unit){
-                        print '<li ><a href="'.$rental_unit['url'].'"><i class="icon-home"></i> '.$rental_unit['title'].'</a></li>';
-                    }
-                    ?>
-                    <li class="divider"></li>
+                    <?php include './'. path_to_theme() .'/templates/section--location-menu.php';?>
                 </ul>
                 <?php print render($page['other_menu']); ?>
             </div>
