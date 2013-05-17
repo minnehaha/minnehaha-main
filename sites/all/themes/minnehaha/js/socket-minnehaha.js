@@ -1,7 +1,7 @@
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect(MIN_CONFIG.getDriverUrl());
 
 jQuery(document).ready(function($){
-    socket = io.connect('http://localhost:3000');//sends connections request to server from which the page was loaded.(triggers 'connection' event at server)
+    socket = io.connect(MIN_CONFIG.getDriverUrl());//sends connections request to server from which the page was loaded.(triggers 'connection' event at server)
 
     //for every form there is .alert element for displaying messages from server. The object messageBox contains the one .alert box from the form submitted by user last
     var messageBox = {
