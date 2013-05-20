@@ -1,7 +1,5 @@
 
-    <li class="nav-header">Articles</li>
-    <?php print render($page['article_menu']); ?>
-    <li class="divider"></li>
+
     <li class="nav-header">Locations</li>
     <?php
     foreach($propertyMap as $key => $rental_unit){
