@@ -46,6 +46,9 @@
         <div class="row">
             <div class="span3">
                 <ul class="nav nav-list">
+                    <li class="nav-header">Articles</li>
+                    <?php print render($page['article_menu']); ?>
+                    <li class="divider"></li>
                     <?php include './'. path_to_theme() .'/templates/section--location-menu.php';?>
                 </ul>
                 <?php print render($page['other_menu']); ?>
@@ -56,7 +59,7 @@
                     <ul class="action-links"><?php print render($action_links); ?></ul>
                 <?php endif; ?>
                 <?php print $feed_icons; ?>
-                <div class="pagge"><h2><?php print $title; ?></h2></div>
+                <div class="article"><h2><?php print $title; ?></h2></div>
                 <p>
                     <?php if(!empty($basicPagePars[0])){print $basicPagePars[0];}?>
                 </p>

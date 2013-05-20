@@ -383,3 +383,10 @@ span.mn-help-inline{
     font-weight: lighter;
     letter-spacing: 5px;
 }
+
+.article h2{
+    font-family: 'eurofurence light';
+    font-size:25px;
+    letter-spacing:3px;
+    text-align:center;
+}
