@@ -92,7 +92,6 @@ function minnehaha_preprocess_page(&$vars, $hook) {
         $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
     }
 
-
     if (isset($vars['node'])) {
         $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
         switch($vars['node']->type){

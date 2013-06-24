@@ -11,7 +11,6 @@
         <div class="row">
             <div class="span12 batas"></div>
             <div class="clearfix"></div>
-                <g:render template="top_messaging"/>
             <div class="span12">
                 <ul class="breadcrumb">
                     <li>
@@ -53,7 +52,7 @@
                     <li class="divider"></li>
                     <?php include './'. path_to_theme() .'/templates/section--location-menu.php';?>
                 </ul>
-                <?php print render($page['other_menu']); ?>
+                <?php include './'. path_to_theme() .'/templates/section--other-menu.php';?>
             </div>
             <div class="span9">
                 <?php if ($tabs): ?><?php print render($tabs); ?><?php endif; ?>
