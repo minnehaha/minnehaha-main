@@ -1,24 +1,5 @@
 var socket = io.connect(MIN_CONFIG.getDriverUrl());
 
-var trackingCode = '<!-- Google Code for Inquiry Conversion Page -->' +
-'<script type="text/javascript">' +
-'/* <![CDATA[ */' +
-'var google_conversion_id = 987152522;' +
-'var google_conversion_language = "en";' +
-'var google_conversion_format = "3";' +
-'var google_conversion_color = "ffffff";' +
-'var google_conversion_label = "I0GzCJb1hwYQioHb1gM";' +
-'var google_conversion_value = 10;' +
-'/* ]]> */' +
-'</script>' +
-    '<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">' +
-    '</script>' +
-    '<noscript>' +
-        '<div style="display:inline;">' +
-            '<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/987152522/?value=10&amp;label=I0GzCJb1hwYQioHb1gM&amp;guid=ON&amp;script=0"/>' +
-        '</div>' +
-    '</noscript>';
-
 jQuery(document).ready(function($){
     socket = io.connect(MIN_CONFIG.getDriverUrl());//sends connections request to server from which the page was loaded.(triggers 'connection' event at server)
 
@@ -30,17 +11,29 @@ jQuery(document).ready(function($){
         }
     };
 
+    var inquiryForm = {
+        selector: '#inquiry-form-small',
+        element: function (){
+            return $(this.selector);
+        }
+    };
+
 //waiting for message to arrive. Once received, renders on page
     socket.on('message', function (data) {
         data = JSON.parse(data);
         if(data.type == "ERROR"){
+            inquiryForm.element().find('.progress').fadeOut(1000);
             messageBox.element().addClass('alert-error').append('<span>' + data.message + '</span>').fadeIn(2000);
         }else{
-            messageBox.element().append('<span>' + data.message + '</span>' + trackingCode).fadeIn(2000);
+            trackConversion('inquiry');
+            inquiryForm.element().find('.progress').fadeOut(1000);
+            messageBox.element().append('<span>' + data.message + '</span>').fadeIn(2000);
         }
     });
 
     $('#submitInq').click(function(){
+        inquiryForm.selector = '#inquiry-form-small';
+        inquiryForm.element().prepend('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').fadeIn(1000);
         $("#inquiry-form-small .alert").alert('close');
         var data = {
             content: $('#inqContent').val(),
@@ -57,6 +50,8 @@ jQuery(document).ready(function($){
     });
 
     $('#submitPropertyInq').click(function(){
+        inquiryForm.selector = '#inquiry-form';
+        inquiryForm.element().prepend('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').fadeIn(1000);
         $("#inquiry-form .alert").alert('close');
         $('#inquiry-form .control-group').removeClass('error');
         var preventRobots = $('#inquiry-form .preventRobots').val()
@@ -80,6 +75,8 @@ jQuery(document).ready(function($){
     });
 
     $('#testimonialSubmitBt').click(function(){
+        inquiryForm.selector = '#testimonial-form';
+        inquiryForm.element().prepend('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').fadeIn(1000);
         $("#testimonial-form .alert").alert('close');
         $('#testimonial-form .control-group').removeClass('error');
         var preventRobots = $('#testimonial-form .preventRobots').val()
@@ -108,6 +105,8 @@ jQuery(document).ready(function($){
 
 //ContactUs Form processed by attaching event to the button contactUsSubmitBy
     $('#contactUsSubmitBt').click(function(){
+        inquiryForm.selector = '#contact-us-form';
+        inquiryForm.element().prepend('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').fadeIn(1000);
         $("#contact-us-form .alert").alert('close');
             var data = {
                 name:$('#contact-us-form .name').val(),
@@ -127,11 +126,7 @@ jQuery(document).ready(function($){
         return false;
     });
 
-    $('#testimonial-list').load(function(){
-        alert('testimonial loaded');
-    });
-
-    //attaching event that appends back DOM elements removed by Twitter Boostrap when closing message box
+    //attaching event that appends back DOM elements removed by Twitter Bootstrap when closing message box
     $(document).on('closed','#inquiry-form .alert', function () {
         $('#inquiry-form .message-section').append('<div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">×</button></div>');
     });
