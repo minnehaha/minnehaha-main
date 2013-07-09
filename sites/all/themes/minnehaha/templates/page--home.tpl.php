@@ -4,7 +4,7 @@
 <script>
     <?php include './'. path_to_theme() .'/templates/section--temp-processing.php';?>
 </script>
-<?php print '<script src="'.base_path() . path_to_theme() .'/js/featured-review-list.js?v=21"></script>';?>
+<?php print '<script src="'.base_path() . path_to_theme() .'/js/featured-review-list.js?v=22"></script>';?>
 <div class="isi">
     <div class="container">
       <div class="row">
@@ -133,8 +133,7 @@
                     </blockquote>
                 </div>
                 <?php } ?>
-                <a href="http://minnehahalofts.com/" itemprop="url">http://minnehahalofts.com</a>
-            </div>
+                <?php print '<a href="'.$GLOBALS['base_url'].'/" itemprop="url">'.$GLOBALS['base_url'].'</a>';?>
         </div>
     </div>
 </div>

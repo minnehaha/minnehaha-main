@@ -18,8 +18,8 @@ testimonialList.element().append('<div class="progress progress-striped active">
 socket.send(JSON.stringify(data));
 
 socket.on('reviews', function (data) {
+    testimonialList.element().find('.progress').fadeOut(1000);
     data.each(function(review){
-        testimonialList.element().find('.progress').fadeOut(1000);
         //if rental id not provided, default to property with id 2 @ToDo need to make it configurable
         var rentalId = (review.rentalUnitId == 'null')? 2 : review.rentalUnitId;
         $('#testimonial-list').append('<div class="row"><div class="span3"><img alt="' + finalTestimonialMap[rentalId][0].alt
@@ -28,4 +28,10 @@ socket.on('reviews', function (data) {
             + ' ' + Date.create(review.dateReceived).format('{Month} {d}, {yyyy}') + '</small></blockquote></div></div><hr>');
     });
 });
+
+    $('a[data-toggle="tab"]').on('shown', function (e) {
+        if(e.target.toString().endsWith('#unit-testimonial') && testimonialList.element().find('.progress')){
+            testimonialList.element().find('.progress').fadeOut(1000);
+        }
+    })
 });

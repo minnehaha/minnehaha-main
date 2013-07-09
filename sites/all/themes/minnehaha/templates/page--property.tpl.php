@@ -5,7 +5,7 @@
 <script>
     <?php include './'. path_to_theme() .'/templates/section--temp-processing.php';?>
 </script>
-<?php print '<script src="'.base_path() . path_to_theme() .'/js/review-list.js?v=37"></script>';?>
+<?php print '<script src="'.base_path() . path_to_theme() .'/js/review-list.js?v=50"></script>';?>
 <div class="isi">
     <div class="container">
         <div class="row">
