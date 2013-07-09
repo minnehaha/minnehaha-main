@@ -32,6 +32,11 @@ jQuery(document).ready(function($){
     });
 
     $('#submitInq').click(function(){
+        //@ToDo
+        //move the following conversion tracking to when response from server received instead at the time triggered
+//        _trackEvent('inquiry', 'submit', 'general', '10', false);
+        _gaq.push(['_trackEvent', 'inquiry', 'submit', 'general',10, false]);
+
         inquiryForm.selector = '#inquiry-form-small';
         inquiryForm.element().prepend('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').fadeIn(1000);
         $("#inquiry-form-small .alert").alert('close');
@@ -50,6 +55,7 @@ jQuery(document).ready(function($){
     });
 
     $('#submitPropertyInq').click(function(){
+        trackGoalConvert($('#inquiry-form .rentalUnit').val());
         inquiryForm.selector = '#inquiry-form';
         inquiryForm.element().prepend('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').fadeIn(1000);
         $("#inquiry-form .alert").alert('close');
@@ -75,6 +81,8 @@ jQuery(document).ready(function($){
     });
 
     $('#testimonialSubmitBt').click(function(){
+        _gaq.push(['_trackEvent', 'contact', 'submit', 'general',10, false]);
+
         inquiryForm.selector = '#testimonial-form';
         inquiryForm.element().prepend('<div class="progress progress-striped active"><div class="bar" style="width: 40%;"></div></div>').fadeIn(1000);
         $("#testimonial-form .alert").alert('close');
@@ -141,7 +149,23 @@ jQuery(document).ready(function($){
         $('#contact-us-form .message-section').append('<div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">×</button></div>');
     });
 
+    function trackGoalConvert(id){
+        switch (id){
+            case '1':
+                _gaq.push(['_trackEvent', 'inquiry', 'submit', 'sydney',10, false]);
+                break;
+            case '2':
+                _gaq.push(['_trackEvent', 'inquiry', 'submit', 'riga',10, false]);
+                break;
+            case '3':
+                _gaq.push(['_trackEvent', 'inquiry', 'submit', 'minnehaha',10, false]);
+                break;
+            default:
+                _gaq.push(['_trackEvent', 'inquiry', 'submit', 'general',10, false]);
+                break;
+        }
 
+    }
 //        $('#setname').click(function(){
 //            socket.emit("set_name", {name:
 //                $('#nickname').val() });

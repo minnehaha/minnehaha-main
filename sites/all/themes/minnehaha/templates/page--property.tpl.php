@@ -21,7 +21,7 @@
                         <a href="/">Home</a> <span class="divider">/</span>
                     </li>
                     <li class="active">
-                        <?php if($title){print $title;} ?>
+                        <?php if($title){print $title.' (furnished '.$fieldPropertyType.' Minneapolis MN)';} ?>
                     </li>
                 </ul>
             </div>
@@ -31,7 +31,7 @@
             <div class='span3'>
                 <div class="pagge">
                     <h2><?php print $property_character ?></h2>
-                    <p><?php print $property_slogan; ?></p>
+                    <h3><?php print $property_slogan; ?></h3>
                 </div>
             </div>
             <div class='span9'>
@@ -85,7 +85,7 @@
         <div class="row">
             <div class="span3">
                 <ul class="nav nav-list">
-                    <li class="nav-header">About <?php print $fieldPropertyType;?></li>
+                    <li class="nav-header">About Furnished <?php print $fieldPropertyType;?></li>
                     <li class="active"><a href="#about" data-toggle="tab"><i class="icon-info-sign"></i> About</a></li>
                     <li><a href="#map" data-toggle="tab"><i class="icon-map-marker"></i> Map</a></li>
                     <li><a href="#price" data-toggle="tab"><i class="icon-briefcase"></i> Price</a></li>
@@ -96,7 +96,7 @@
                     <li class="divider"></li>
                 </ul>
                 <ul class="nav nav-list">
-                    <li class="nav-header">Other</li>
+                    <li class="nav-header">Other Furnished Rentals</li>
                     <?php
                     foreach($propertyMapWithoutOne as $key => $rental_unit){
                         print '<li><a href="'.base_path().$rental_unit['url'].'"><i class="icon-home"></i>'.$rental_unit['title'].'</a></li>';
@@ -127,7 +127,6 @@
                                 <div class="thumbnail">
                                     <img src="<?php print $contentPhotoImageUrl1; ?>"
                                          alt="<?php print $contentPhotoImageAlt1; ?>">
-                                    </a>
                                     <div class="caption">
                                         <h5><?php print $contentPhotoTitle1; ?> </h5>
                                         <p><?php print $contentPhotoDescription1 ?></p>
@@ -185,8 +184,26 @@
                             <dt>Located: </dt>
                             <dd>
                                 <address>
-                                    <?php print $fieldPropertyAddress;?>
+                                    <div itemscope itemtype="http://schema.org/PostalAddress">
+                                        <span itemprop="name"><?php if($title){print $title.' (furnished '.$fieldPropertyType.' Minneapolis MN)';} ?></span>
+                                        <br>
+                                        <span itemprop="streetAddress"><?php print $fieldPropertyAddress['street'] ?></span>
+                                        <span itemprop="addressLocality"><?php print $fieldPropertyAddress['city'] ?></span>,
+                                        <span itemprop="addressRegion"><?php print $fieldPropertyAddress['state'] ?></span>
+                                        <span itemprop="postalCode"><?php print $fieldPropertyAddress['zip'] ?></span>
+                                        <span itemprop="addressCountry">United States</span>
+                                    </div>
                                 </address>
+                                <div itemprop="location">
+                                    <span itemscope itemtype="http://schema.org/Place">
+                                        <div itemprop="geo">
+                                            <span itemscope itemtype="http://schema.org/GeoCoordinates">
+                                                <?php print '<span property="latitude" content="'.$fieldPropertyAddress['latitude'].'"></span>';?>
+                                                <?php print '<span property="longitude" content="'.$fieldPropertyAddress['longitude'].'"></span>';?>
+                                            </span>
+                                        </div>
+                                    </span>
+                                </div>
                             </dd>
                         </dl>
                     </div>

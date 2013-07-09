@@ -32,5 +32,5 @@
                 </div>
             </div>
             <hr />
-            <footer><p>copyright <span class="minilogo">&nbsp;Minnehaha<i>Lofts</i></span> &copy; 2012. Created by : <a href="http://www.kapasoft.com">KapaSoft</a></p</footer>
+            <footer><p>copyright <span class="minilogo">&nbsp;Minnehaha<i>Lofts</i></span> &copy; 2013. Created by : <a href="http://www.kapasoft.com">KapaSoft</a></p></footer>
 </div>

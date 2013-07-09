@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="<?php print $language->language; ?>">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    --><?php //print '<link href="'.base_path() . path_to_theme() .'css/telex.woff" rel="stylesheet" type="text/css">'; ?>
   <?php print $head; ?>
-  <title><?php print $head_title; ?></title>
+    <?php print '<meta name="description" content="'.$seo_description.'">';?>
+    <?php print '<meta name="keywords" content="'.$seo_keywords.'">';?>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php echo '<meta name="geo.region" content="US-'.$state.'" />'."\n";?>
+    <?php echo '<meta name="geo.placename" content="'.$city.'" />'."\n";?>
+    <?php echo '<meta name="geo.position" content="'.$latitude.';'.$longitude.'" />'."\n"; ?>
+    <?php echo '<meta name="ICBM" content="'.$latitude.', '.$longitude.'" /> '."\n";?>
+  <title><?php
+      print $seo_title;
+     ?></title>
    <?php print '<script>';
    print 'var MIN_CONFIG = (function () {';
       print 'var viewDriverHost = "'.$interfaceConfig['driver_url'].'";';
