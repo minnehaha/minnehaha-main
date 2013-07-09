@@ -1,19 +1,31 @@
-var rentalId = jQuery('#rentalUnitId').val();
 
+jQuery(document).ready(function($){
+var rentalId = $('#rentalUnitId').val();
+
+    var testimonialList = {
+        selector: '#testimonial-list',
+        element: function (){
+            return $(this.selector);
+        }
+    };
 
 var data = {
     type:'getTestimonial',
-    rentalId: jQuery('#rentalUnitId').val()
+    rentalId: $('#rentalUnitId').val()
 };
+
+testimonialList.element().append('<div class="progress progress-striped active"><div class="bar" style="width: 60%;"></div></div>').fadeIn(1000);
 socket.send(JSON.stringify(data));
 
 socket.on('reviews', function (data) {
     data.each(function(review){
+        testimonialList.element().find('.progress').fadeOut(1000);
         //if rental id not provided, default to property with id 2 @ToDo need to make it configurable
         var rentalId = (review.rentalUnitId == 'null')? 2 : review.rentalUnitId;
-        jQuery('#testimonial-list').append('<div class="row"><div class="span3"><img alt="' + finalTestimonialMap[rentalId][0].alt
+        $('#testimonial-list').append('<div class="row"><div class="span3"><img alt="' + finalTestimonialMap[rentalId][0].alt
             + '" class="img-circle" src="' + finalTestimonialMap[rentalId][0].url + '"> </div><div class="span6"><blockquote><p>'
             + review.content + '</p><small class="guest">' + review.submittedBy
             + ' ' + Date.create(review.dateReceived).format('{Month} {d}, {yyyy}') + '</small></blockquote></div></div><hr>');
     });
+});
 });

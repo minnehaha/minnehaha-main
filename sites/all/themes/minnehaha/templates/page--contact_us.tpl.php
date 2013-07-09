@@ -29,7 +29,7 @@
                         <h2><?php print $title; ?></h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-                    <p><?php if(!empty($page_slogan)){print $page_slogan;} ?></p>
+                    <h3><?php if(!empty($page_slogan)){print $page_slogan;} ?></h3>
                 </div>
             </div>
             <div class='span9'>
@@ -51,7 +51,7 @@
                         <li><i class="icon-road"></i><?php if(!empty($street_address)){print $street_address;} ?></li>
                         <li><?php if(!empty($zip_code)){print $zip_code;} ?></li>
                         <li><iframe width="280" height="280" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?hl=en&amp;q=3324+23rd+Ave+South+Minneapolis,+mn+55407&amp;ie=UTF8&amp;hq=&amp;hnear=3324+23rd+Ave+S,+Minneapolis,+Minnesota+55407&amp;gl=us&amp;t=m&amp;ll=44.941959,-93.239422&amp;spn=0.021264,0.030041&amp;z=14&amp;output=embed"></iframe></li>
-                        <li class="nav-header">Our Telephone Number</li>
+                        <li class="nav-header"></li>
                         <li><?php if(!empty($phone_number)){print $phone_number;} ?></li>
                     </ul>
             </div>

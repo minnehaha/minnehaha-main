@@ -27,7 +27,7 @@
                         <h2>Guest Account</h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-                    <p>...guest login and profile information</p>
+                    <h3>...guest login and profile information</h3>
                 </div>
             </div>
             <div class='span9'>

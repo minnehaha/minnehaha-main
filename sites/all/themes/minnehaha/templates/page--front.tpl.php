@@ -4,7 +4,7 @@
 <script>
     <?php include './'. path_to_theme() .'/templates/section--temp-processing.php';?>
 </script>
-<?php print '<script src="'.base_path() . path_to_theme() .'/js/featured-review-list.js?v=19"></script>';?>
+<?php print '<script src="'.base_path() . path_to_theme() .'/js/featured-review-list.js?v=21"></script>';?>
 <div class="isi">
     <div class="container">
       <div class="row">
@@ -57,7 +57,7 @@
             <div class="well-header"><h2>Welcome To Minnehaha Lofts</h2></div>
 
             <div class="row-fluid">
-                <div class="span12">We pride ourselves in providing home-like accommodations for our guests while visiting the Twin Cities. Minneahaha Lofts offers beautifully remodeled properties that offer high quality furnishings and are well maintained. Its important for us that our guests have a memoriable furnished home experience.
+                <div class="span12">We pride ourselves in providing home-like extended stay accommodations for our guests while visiting the Twin Cities. Minneahaha Lofts offers beautifully remodeled fully furnished apartments and homes in Minnesota that are well maintained. Its important for us that our guests have a memoriable furnished home experience.
                 </div>
                 <div class="clearfix batas"></div>
             </div>

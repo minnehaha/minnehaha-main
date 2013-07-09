@@ -11,7 +11,7 @@
         <div class="row">
             <div class="span12 batas"></div>
             <div class="clearfix"></div>
-                <g:render template="top_messaging"/>
+
             <div class="span12">
                 <ul class="breadcrumb">
                     <li>
@@ -30,7 +30,7 @@
                         <h2><?php print $title; ?></h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-                    <p><?php if(!empty($page_slogan)){print $page_slogan;} ?></p>
+                    <h3><?php if(!empty($page_slogan)){print $page_slogan;} ?></h3>
                 </div>
             </div>
             <div class='span9'>

@@ -14,8 +14,8 @@ function trackConversion(label) {
     google_conversion_label = conversionLabels[label];
 
     document.write = function(text) {
-        jQuery('#content').append(text);
+        jQuery('body').append(text);
     };
 
     jQuery.getScript('https://www.googleadservices.com/pagead/conversion.js');
-};
+}

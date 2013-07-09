@@ -29,7 +29,7 @@
                         <h2>Diary</h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-                    <p>...sharing information about Minnesota</p>
+                    <h3>...sharing information about Minnesota</h3>
                 </div>
             </div>
             <div class='span9'>

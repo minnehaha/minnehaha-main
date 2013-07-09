@@ -1,6 +1,7 @@
 <?php
 function minnehaha_preprocess_html(&$vars, $hook) {
     global $conf;
+
     // Return nid of nodes of type "interface_configuraitons".
     $nid_config = db_select('node', 'n')
         ->fields('n', array('nid'))
@@ -26,8 +27,52 @@ function minnehaha_preprocess_html(&$vars, $hook) {
         //hard coded in default/settings.php
         $interfaceConfig['driver_port'] = $conf['global_driver_port'];
     }
+    $vars['interfaceConfig'] = $interfaceConfig;
+    //retrieving general seo content
+    $genSeo = node_load($configurationNode->field_seo_general_description['und'][0]['target_id']);
+    $seoGenDescription = $genSeo->field_seo_description['und'][0]['value'];
+    $seoGenTitle = $genSeo->field_seo_title['und'][0]['value'];
+    $seoGenKeywords= $genSeo->field_seo_keywords['und'][0]['value'];;
 
-        $vars['interfaceConfig'] = $interfaceConfig;
+    //retrieving current page seo content
+    $nodeId=max(array_keys($vars["page"]["content"]["system_main"]["nodes"]));
+    $currentType = $vars["page"]["content"]["system_main"]["nodes"][$nodeId]["#node"];
+    $fieldName = "field_seo_".$currentType->type;
+    $seoTextIns = $currentType->$fieldName;
+    $seoText = node_load($seoTextIns['und'][0]['target_id']);
+    $seoTitle = $seoText->field_seo_title['und'][0]['value'];
+    $seoDescription = $seoText->field_seo_description['und'][0]['value'];
+    $seoKeywords = $seoText->field_seo_keywords['und'][0]['value'];
+
+    if(!empty($seoTitle)){
+        $vars['seo_title'] = $seoTitle;
+    }else{
+        $vars['seo_title'] = $seoGenTitle;
+    }
+
+    if(!empty($seoDescription)){
+        $vars['seo_description'] = $seoDescription;
+    }else{
+        $vars['seo_description'] = $seoGenDescription;
+    }
+
+    if(!empty($seoKeywords)){
+        $vars['seo_keywords'] = $seoKeywords;
+    }else{
+        $vars['seo_keywords'] = $seoGenKeywords;
+    }
+
+    $genAddress = node_load($configurationNode->field_general_address['und'][0]['target_id']);
+    $genLatitude = $genAddress->field_latitude['und'][0]['value'];
+    $genLongitude = $genAddress->field_longitude['und'][0]['value'];
+    $genCity = $genAddress->field_city['und'][0]['value'];
+    $genState = $genAddress->field_state['und'][0]['value'];
+
+    $vars['latitude'] = $genLatitude;
+    $vars['longitude'] = $genLongitude;
+    $vars['city'] = $genCity;
+    $vars['state'] = $genState;
+
 }
 
 function minnehaha_preprocess_page(&$vars, $hook) {
@@ -56,6 +101,18 @@ function minnehaha_preprocess_page(&$vars, $hook) {
         $fieldParagraphAboutProperty = $value->field_paragraph_about_property;
         $propertyMap[ $i ]['summary'] = $fieldParagraphAboutProperty['und'][0]['value'];
         $propertyMap[ $i ]['universalId'] = $value->field_rental_unit_id['und'][0]['value'];
+        $propertyMap[ $i ]['type'] = $value->field_property_type['und'][0]['value'];
+
+        $propertyAddress = field_get_items('node', $value, 'field_property_address');
+        $propAddressEntity = node_load($propertyAddress[0]['target_id']);
+        $propertyAddressCollection = array();
+        $propertyAddressCollection['latitude'] = $propAddressEntity->field_latitude['und'][0]['value'];
+        $propertyAddressCollection['longitude'] = $propAddressEntity->field_longitude['und'][0]['value'];
+        $propertyAddressCollection['street'] = $propAddressEntity->field_street_address['und'][0]['value'];
+        $propertyAddressCollection['state'] = $propAddressEntity->field_state['und'][0]['value'];
+        $propertyAddressCollection['city'] = $propAddressEntity->field_city['und'][0]['value'];
+        $propertyAddressCollection['zip'] = $propAddressEntity->field_zip_code['und'][0]['value'];
+        $propertyMap[ $i ]['fieldPropertyAddress'] = $propertyAddressCollection;
         $i++;
     }
     $vars['propertyMap'] = $propertyMap;
@@ -219,7 +276,18 @@ function minnehaha_preprocess_property(&$vars, $hook, $propertyMap) {
 
     $vars['fieldPropertyType'] = field_get_items('node', $node, 'field_property_type')[0]['value'];
     $vars['fieldPropertyOtherInfo'] = field_get_items('node', $node, 'field_property_other_info')[0]['value'];
-    $vars['fieldPropertyAddress'] = field_get_items('node', $node, 'field_property_address')[0]['value'];
+
+
+    $propertyAddress = field_get_items('node', $node, 'field_property_address');
+    $propAddressEntity = $propertyAddress[0]['entity'];
+    $propertyAddressCollection = array();
+    $propertyAddressCollection['latitude'] = $propAddressEntity->field_latitude['und'][0]['value'];
+    $propertyAddressCollection['longitude'] = $propAddressEntity->field_longitude['und'][0]['value'];
+    $propertyAddressCollection['street'] = $propAddressEntity->field_street_address['und'][0]['value'];
+    $propertyAddressCollection['state'] = $propAddressEntity->field_state['und'][0]['value'];
+    $propertyAddressCollection['city'] = $propAddressEntity->field_city['und'][0]['value'];
+    $propertyAddressCollection['zip'] = $propAddressEntity->field_zip_code['und'][0]['value'];
+    $vars['fieldPropertyAddress'] = $propertyAddressCollection;
 
     $fieldParagraphAboutProperty = field_get_items('node', $node, 'field_paragraph_about_property');
     $sizeOfParagraphs = count($fieldParagraphAboutProperty);
