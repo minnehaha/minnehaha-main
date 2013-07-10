@@ -198,8 +198,8 @@
                                     <span itemscope itemtype="http://schema.org/Place">
                                         <div itemprop="geo">
                                             <span itemscope itemtype="http://schema.org/GeoCoordinates">
-                                                <?php print '<span property="latitude" content="'.$fieldPropertyAddress['latitude'].'"></span>';?>
-                                                <?php print '<span property="longitude" content="'.$fieldPropertyAddress['longitude'].'"></span>';?>
+                                                <?php print '<meta itemprop="latitude" content="'.$fieldPropertyAddress['latitude'].'" />';?>
+                                                <?php print '<meta itemprop="longitude" content="'.$fieldPropertyAddress['longitude'].'" />';?>
                                             </span>
                                         </div>
                                     </span>
