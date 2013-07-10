@@ -115,14 +115,12 @@
         <div class="span12">
             <div itemscope itemtype="http://schema.org/Organization">
                 <span itemprop="name">Minnehaha Lofts</span> provides furnished apartments and homes Minneapolis Minnesota:
-
+                <div class="span2">
+                    <?php print '<a href="'.$GLOBALS['base_url'].base_path().$rental_unit['url'].'"><img class="img-circle" itemprop="logo" src="'.$rental_unit['featuredTestimonialPhotoUrl'].'" /></a>'?>
+                </div>
                 <?php foreach($propertyMap as $key => $rental_unit){ ?>
                 <div itemscope itemtype="http://schema.org/PostalAddress">
-
                      <blockquote >
-                        <div class="span2">
-                            <?php print '<a href="'.$GLOBALS['base_url'].base_path().$rental_unit['url'].'"><img class="img-circle" itemprop="logo" src="'.$rental_unit['featuredTestimonialPhotoUrl'].'" /></a>'?>
-                        </div>
                         <span itemprop="name"><?php print $rental_unit['title']; ?></span>
                         <br>
                         <span itemprop="streetAddress"><?php print $rental_unit['fieldPropertyAddress']['street'] ?></span>
