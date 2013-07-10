@@ -2,6 +2,12 @@
             <div class="row">
                 <div class="span4">
                     <h2>Minnehaha<i>Lofts</i></h2>
+                    <ul class="ml-foot">
+                        <?php
+                        foreach($seoref as $key => $ref){
+                        print '<li><h1><a href="http://'.$ref['url'].'" target="_blank">'.$ref['keyword'].'</a></h1></li>';
+ }?>
+                    </ul>
                 </div>
                 <div class="span4">
                     <h2><i class="icon-globe icon-white jarak-kecil"></i>Social Networking</h2>

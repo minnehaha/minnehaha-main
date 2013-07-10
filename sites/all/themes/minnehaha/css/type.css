@@ -403,3 +403,27 @@ span.mn-help-inline{
 div.rich-snippets{
    display: none;
 }
+
+.logo h2{
+    color: #222222;
+    font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0 0 9px;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+
+.ml-foot h1{
+    color: #222222;
+    font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0px 0px;
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+
+.ml-foot h1 a{
+    text-decoration:none;
+}

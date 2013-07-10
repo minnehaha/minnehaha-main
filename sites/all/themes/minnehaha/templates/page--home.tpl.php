@@ -54,10 +54,10 @@
 <div class="row">
     <div class="span12">
         <div class="well-small">
-            <div class="well-header"><h2>Welcome To Minnehaha Lofts - Furnished Apartments and Homes Minneapolis Minnesota</h2></div>
+            <div class="well-header"><h2><?php print $welcome_note; ?></h2></div>
 
             <div class="row-fluid">
-                <div class="span12">We pride ourselves in providing home-like extended stay accommodations for our guests while visiting the Twin Cities. Minneahaha Lofts offers beautifully remodeled fully furnished apartments and homes in Minnesota that are well maintained. Its important for us that our guests have a memoriable furnished home experience.
+                <div class="span12"><?php print $welcome_intro; ?>
                 </div>
                 <div class="clearfix batas"></div>
             </div>
@@ -114,7 +114,7 @@
     <div class="row rich-snippets">
         <div class="span12">
             <div itemscope itemtype="http://schema.org/Organization">
-                <span itemprop="name">Minnehaha Lofts</span> provides furnished apartments and homes Minneapolis Minnesota:
+                <span itemprop="name">Minnehaha Lofts</span> <?php print $rich_snippet ?>
                 <div class="span2">
                     <?php print '<a href="'.$GLOBALS['base_url'].base_path().$rental_unit['url'].'"><img class="img-circle" itemprop="logo" src="'.$rental_unit['featuredTestimonialPhotoUrl'].'" /></a>'?>
                 </div>

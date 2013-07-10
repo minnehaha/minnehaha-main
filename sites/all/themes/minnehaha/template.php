@@ -28,6 +28,7 @@ function minnehaha_preprocess_html(&$vars, $hook) {
         $interfaceConfig['driver_port'] = $conf['global_driver_port'];
     }
     $vars['interfaceConfig'] = $interfaceConfig;
+
     //retrieving general seo content
     $genSeo = node_load($configurationNode->field_seo_general_description['und'][0]['target_id']);
     $seoGenDescription = $genSeo->field_seo_description['und'][0]['value'];
@@ -149,6 +150,27 @@ function minnehaha_preprocess_page(&$vars, $hook) {
         $vars['image_url'] = url('sites/default/files/'.file_uri_target($fieldHeaderBkIma[0]['uri']), array('absolute'=>true));
     }
 
+    //retrieve seo reference list
+    // Return nid of nodes of type "interface_configuraitons".
+    $nid_config = db_select('node', 'n')
+        ->fields('n', array('nid'))
+        ->fields('n', array('type'))
+        ->condition('n.type', 'interface_configurations')
+        ->execute()
+        ->fetchCol();
+    //load the configurations
+    $configurationNode = node_load($nid_config);
+    $seoRef = $configurationNode->field_seo_reference['und'];
+    $seoRefList = array();
+    $j=0;
+    foreach($seoRef as $key => $seoRefInst){
+        $seoRefObj = node_load($seoRefInst['target_id']);
+        $seoRefList[$j]['url'] =  $seoRefObj->field_ref_url['und'][0]['value'];
+        $seoRefList[$j]['keyword'] =  $seoRefObj->field_ref_keyword['und'][0]['value'];
+        $j++;
+    }
+    $vars['seoref'] = $seoRefList;
+
     if (isset($vars['node'])) {
         $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
         switch($vars['node']->type){
@@ -169,6 +191,9 @@ function minnehaha_preprocess_page(&$vars, $hook) {
                 break;
             case "contact_us":
                 minnehaha_preprocess_contactus($vars, $hook);
+                break;
+            case "home":
+                minnehaha_preprocess_home($vars, $hook);
                 break;
             default:
                 minnehaha_preprocess_basic_page($vars, $hook);
@@ -451,6 +476,30 @@ function minnehaha_preprocess_contactus(&$vars, $hook){
         if ($fieldZipCode){
             $zip_code = $fieldZipCode[0]['value'];
             $vars['zip_code'] = $zip_code;
+        }
+    }
+}
+
+function minnehaha_preprocess_home(&$vars, $hook){
+    $node = $vars['node'];
+    if (!empty($node)){
+
+        $welcomeNote = field_get_items('node', $node, 'field_welcome_note');
+        if ($welcomeNote){
+            $welcome_note = $welcomeNote[0]['value'];
+            $vars['welcome_note'] = $welcome_note;
+        }
+
+        $welcomeIntro = field_get_items('node', $node, 'field_welcome_intro');
+        if ($welcomeIntro){
+            $welcome_intro = $welcomeIntro[0]['value'];
+            $vars['welcome_intro'] = $welcome_intro;
+        }
+
+        $richSnippet = field_get_items('node', $node, 'field_rich_sninppets');
+        if ($richSnippet){
+            $rich_snippet = $richSnippet[0]['value'];
+            $vars['rich_snippet'] = $rich_snippet;
         }
     }
 }
