@@ -1,1 +1,1 @@
-release-0.2.9.2
+release-0.2.9.6
