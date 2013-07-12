@@ -21,7 +21,7 @@
                         <a href="/">Home</a> <span class="divider">/</span>
                     </li>
                     <li class="active">
-                        <?php if($title){print $title.' (furnished '.$fieldPropertyType.' Minneapolis MN)';} ?>
+                        <?php if($title){print $title.' '.$propertyBreadcrumb;} ?>
                     </li>
                 </ul>
             </div>
@@ -85,7 +85,7 @@
         <div class="row">
             <div class="span3">
                 <ul class="nav nav-list">
-                    <li class="nav-header">About Furnished <?php print $fieldPropertyType;?></li>
+                    <li class="nav-header"><?php print $propMenuTitle.' '.$fieldPropertyType;?></li>
                     <li class="active"><a href="#about" data-toggle="tab"><i class="icon-info-sign"></i> About</a></li>
                     <li><a href="#map" data-toggle="tab"><i class="icon-map-marker"></i> Map</a></li>
                     <li><a href="#price" data-toggle="tab"><i class="icon-briefcase"></i> Price</a></li>
@@ -96,7 +96,7 @@
                     <li class="divider"></li>
                 </ul>
                 <ul class="nav nav-list">
-                    <li class="nav-header">Other Furnished Rentals</li>
+                    <li class="nav-header"><?php print $otherPropertyListing ?></li>
                     <?php
                     foreach($propertyMapWithoutOne as $key => $rental_unit){
                         print '<li><a href="'.base_path().$rental_unit['url'].'"><i class="icon-home"></i>'.$rental_unit['title'].'</a></li>';

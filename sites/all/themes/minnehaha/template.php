@@ -171,6 +171,13 @@ function minnehaha_preprocess_page(&$vars, $hook) {
     }
     $vars['seoref'] = $seoRefList;
 
+    $propMenuTitle = $configurationNode->field_property_menu_title['und'][0]['value'];
+    $otherMenuTitle = $configurationNode->field_other_menu_title['und'][0]['value'];
+    $otherPropertyListing = $configurationNode->field_other_property_listing['und'][0]['value'];
+    $vars['propMenuTitle'] = $propMenuTitle;
+    $vars['otherMenuTitle'] = $otherMenuTitle;
+    $vars['otherPropertyListing'] = $otherPropertyListing;
+
     if (isset($vars['node'])) {
         $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
         switch($vars['node']->type){
@@ -303,8 +310,11 @@ function minnehaha_preprocess_property(&$vars, $hook, $propertyMap) {
     $vars['fieldPropertyOtherInfo'] = field_get_items('node', $node, 'field_property_other_info')[0]['value'];
 
 
+    $property_breadcrumb = $node->field_property_breadcrumb['und'][0]['value'];
+    $vars['propertyBreadcrumb'] = $property_breadcrumb;
+
     $propertyAddress = field_get_items('node', $node, 'field_property_address');
-    $propAddressEntity = $propertyAddress[0]['entity'];
+    $propAddressEntity = node_load($propertyAddress[0]['target_id']);
     $propertyAddressCollection = array();
     $propertyAddressCollection['latitude'] = $propAddressEntity->field_latitude['und'][0]['value'];
     $propertyAddressCollection['longitude'] = $propAddressEntity->field_longitude['und'][0]['value'];
