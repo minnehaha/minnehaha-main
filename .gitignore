@@ -10,3 +10,4 @@ sites/*/private
 
 sites/default/files/js/*
 sites/default/files/css/*
+sites/default/files/data_export_import/nodes/*
