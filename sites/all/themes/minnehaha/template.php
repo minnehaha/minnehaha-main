@@ -178,6 +178,9 @@ function minnehaha_preprocess_page(&$vars, $hook) {
     $vars['otherMenuTitle'] = $otherMenuTitle;
     $vars['otherPropertyListing'] = $otherPropertyListing;
 
+    $siteSlogan = $configurationNode->field_website_slogan['und'][0]['value'];
+    $vars['siteSlogan'] = $siteSlogan;
+
     if (isset($vars['node'])) {
         $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
         switch($vars['node']->type){

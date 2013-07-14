@@ -36,7 +36,7 @@ task importDbOnly(type:Exec){
     task clearNodes(type:Exec){
        doFirst{println "clearing Nodes Directory..."}
            executable "sh"
-           args "-c", "rm -R sites/default/files/data_export_import/nodes"
+           args "-c", "rm -fR sites/default/files/data_export_import/nodes"
     }
 
    task exportNodes(dependsOn: 'clearNodes', type:Exec){
@@ -65,19 +65,33 @@ task importDbOnly(type:Exec){
 
  task prepareNodesToImport(type:Exec){
        doFirst{println "prepare Nodes to Import..."}
-           executable "sh"
-           args "-c", "rm -R sites/default/files/data_export_import/nodes; cp -R sites/default/files/data_export_import_${view}/nodes sites/default/files/data_export_import/nodes"
-    }
+       executable "sh"
+       args "-c", "rm -R sites/default/files/data_export_import/nodes; cp -R sites/default/files/data_export_import_${view}/nodes sites/default/files/data_export_import/nodes"
+ }
 
-task importNodes(dependsOn: 'prepareNodesToImport', type:Exec){
-       doFirst{println "importing Nodes..."}
-           executable "sh"
-           args "-c", "drush dei-im nodes --content-types=address,article,blog,contact_us,faq,faq_page,home,interface_configurations,list,page,photo,property,rental_price,seo_reference,seo_text,testimonials"
-    }
+task importNodes(dependsOn: 'prepareNodesToImport') << {
+       def dir = new File("sites/default/files/data_export_import/nodes").list().toList()
+       for (fileName in dir ) {
+              println "ipmorting file ${fileName}..."
+                    exec {
+                        executable "sh"
+                        args "-c", "drush dei-im nodes --file=${fileName}"
+                    }
+       }
+}
 
  task importUrl(dependsOn: 'importNodes', type:Exec){
      doFirst{println "exporting Urls..."}
          executable "sh"
          args "-c", "mysql -u ${user} -p${pass} -h localhost ${db}<sites/default/files/data_export_import_${view}/url_${db}_import.sql"
   }
+
+  task mmm << {
+    def list = []
+    def dir = new File("sites/default/files/data_export_import/nodes").list().toList()
+    for ( fName in dir ) {
+              println fName
+    }
+  }
+
 
