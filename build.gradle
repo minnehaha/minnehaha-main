@@ -54,7 +54,7 @@ task importDbOnly(type:Exec){
      task backupNodes(dependsOn: 'exportNodes', type:Exec){
            doFirst{println "backup Nodes..."}
                executable "sh"
-               args "-c", "mkdir sites/default/files/data_export_import_${view};cp -R sites/default/files/data_export_import/nodes sites/default/files/data_export_import_${view}/nodes "
+               args "-c", "rm -fR sites/default/files/data_export_import_${view}/nodes; mkdir sites/default/files/data_export_import_${view}; cp -R sites/default/files/data_export_import/nodes sites/default/files/data_export_import_${view}/nodes "
         }
 
          task exportUrl(dependsOn: 'backupNodes', type:Exec){
@@ -81,17 +81,10 @@ task importNodes(dependsOn: 'prepareNodesToImport') << {
 }
 
  task importUrl(dependsOn: 'importNodes', type:Exec){
-     doFirst{println "exporting Urls..."}
+     doFirst{println "importing Urls..."}
          executable "sh"
          args "-c", "mysql -u ${user} -p${pass} -h localhost ${db}<sites/default/files/data_export_import_${view}/url_${db}_import.sql"
   }
 
-  task mmm << {
-    def list = []
-    def dir = new File("sites/default/files/data_export_import/nodes").list().toList()
-    for ( fName in dir ) {
-              println fName
-    }
-  }
 
 
