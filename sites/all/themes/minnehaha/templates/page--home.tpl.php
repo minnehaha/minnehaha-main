@@ -17,21 +17,24 @@
             <div id="myCarousel" class="carousel slide">
                 <div class="carousel-inner">
                     <div class="item  active">
-                        <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/slide_1.jpg" alt="">'; ?>
+                        <?php print '<img src="'.$slidePhotos[0]['url'].'"
+                                          alt="'.$slidePhotos[0]['alt'].'">'; ?>
                     <div class="carousel-caption">
                         <h2>Elegance in Design</h2>
                         <p>Elegantly furnished to ensure a comfortable and quality furnished home experience </p>
                     </div>
                 </div>
                 <div class="item">
-                    <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/slide_2.jpg" alt="">'; ?>
+                    <?php print '<img src="'.$slidePhotos[1]['url'].'"
+                                      alt="'.$slidePhotos[1]['alt'].'">'; ?>
                     <div class="carousel-caption">
                         <h2>Charm</h2>
                         <p>Restoring its original beauty while attaching today's craftsman touch brings a charm to our places that will please you at every moment</p>
                     </div>
                 </div>
                 <div class="item">
-                    <?php print '<img src="'.base_path() . path_to_theme() .'/img/minnehaha/slide_4.jpg" alt="">'; ?>
+                    <?php print '<img src="'.$slidePhotos[2]['url'].'"
+                                      alt="'.$slidePhotos[2]['alt'].'">'; ?>
                     <div class="carousel-caption">
                         <h2>Feel of Home</h2>
                         <p>Furnished with everything one may wish, with your own back yard while located in lovely south minneapolis neighborhood adds a feel of home while away</p>

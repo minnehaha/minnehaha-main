@@ -116,6 +116,7 @@ function minnehaha_preprocess_page(&$vars, $hook) {
         $propertyMap[ $i ]['fieldPropertyAddress'] = $propertyAddressCollection;
         $i++;
     }
+
     $vars['propertyMap'] = $propertyMap;
 
     //about hosts for front page
@@ -496,6 +497,14 @@ function minnehaha_preprocess_contactus(&$vars, $hook){
 function minnehaha_preprocess_home(&$vars, $hook){
     $node = $vars['node'];
     if (!empty($node)){
+
+        $slideImges = field_get_items('node', $node, 'field_front_slide_img');
+        $slidePhotos = array();
+        for($i = 0; $i < count($slideImges); $i++){
+            $slidePhotos[$i]['url'] = url('sites/default/files/'.file_uri_target($slideImges[$i]['uri'], array('absolute'=>true)));
+            $slidePhotos[$i]['alt'] = $slideImges[$i]['alt'];
+        }
+        $vars['slidePhotos'] = $slidePhotos;
 
         $welcomeNote = field_get_items('node', $node, 'field_welcome_note');
         if ($welcomeNote){
