@@ -3,7 +3,13 @@
         <h2><?php print $siteSlogan; ?></h2>
     </div>
     <div class="span5 pull-right">
-        <?php var_dump()?>
-        <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('class' => array('nav nav-pills')))); ?>
-
+            <ul class="nav nav-pills">
+                <?php
+                foreach($mainMenu as $key=>$menuItem){
+                    print '<li';
+                    if($menuItem['active']){ print  ' class="active" ';}
+                    print '><a href="/'.$menuItem['url'].'">'.$menuItem['title'].'</a></li>';
+                }
+                ?>
+            </ul>
     </div>

@@ -182,6 +182,20 @@ function minnehaha_preprocess_page(&$vars, $hook) {
     $siteSlogan = $configurationNode->field_website_slogan['und'][0]['value'];
     $vars['siteSlogan'] = $siteSlogan;
 
+    //generate main menu
+    $mainMenuArray = menu_load_links('main-menu');
+    $finalMainMenu = array();
+    foreach($mainMenuArray as $key=>$menuItem){
+        $finalMainMenu[$key]['active'] = false;
+        $linkPath = $menuItem['link_path'];
+        $linkPathAlias = drupal_get_path_alias($linkPath);
+        $currentId = $vars['node']->nid;
+        if(drupal_get_path_alias("node/$currentId") == $linkPathAlias)$finalMainMenu[$key]['active'] = true;
+        $finalMainMenu[$key]['url'] = $linkPathAlias;
+        $finalMainMenu[$key]['title'] = $menuItem['link_title'];
+    }
+    $vars['mainMenu'] = $finalMainMenu;
+
     if (isset($vars['node'])) {
         $vars['theme_hook_suggestions'][] = 'page__'. $vars['node']->type;
         switch($vars['node']->type){
