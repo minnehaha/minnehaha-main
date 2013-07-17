@@ -3,6 +3,22 @@ def user="makapacs"
 def pass="38394815"
 def db="minnehaha_view_drupal"
 def view="minnehahalfots.com"
+
+//def user="f_apt_mpls"
+//def pass="38394815"
+//def db="furnished_apt_minneapolis"
+//def view="furnishedapartmentminneapolis.com"
+
+//def user="ext_stay"
+//def pass="38394815"
+//def db="extended_stay"
+//def view="extendedstayminnesota.com"
+
+//def user="vrbo_mpls"
+//def pass="38394815"
+//def db="vrbo_minneapolis"
+//def view="vrbominneapolis.com"
+
 def today = new Date().format('MMMdd_yyyy')
 
 task backupFromShell(type:Exec) {
