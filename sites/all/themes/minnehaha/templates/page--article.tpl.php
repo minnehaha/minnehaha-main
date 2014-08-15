@@ -26,7 +26,7 @@
                 <div class="pagge">
                     <?php print render($title_prefix); ?>
                     <?php if ($title): ?>
-                        <h2>Diary</h2>
+                        <h2>Blog</h2>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
                     <h3>...sharing information about Minnesota</h3>
