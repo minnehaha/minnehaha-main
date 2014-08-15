@@ -190,7 +190,7 @@ function minnehaha_preprocess_page(&$vars, $hook) {
         $linkPath = $menuItem['link_path'];
         $linkPathAlias = drupal_get_path_alias($linkPath);
         $currentId = $vars['node']->nid;
-        if(drupal_get_path_alias("node/$currentId") == $linkPathAlias)$finalMainMenu[$key]['active'] = true;
+        if(drupal_get_path_alias("node/$currentId") == $linkPathAlias || $_GET['q'] == $linkPath)$finalMainMenu[$key]['active'] = true;
         $finalMainMenu[$key]['url'] = $linkPathAlias;
         $finalMainMenu[$key]['title'] = $menuItem['link_title'];
     }
@@ -341,6 +341,26 @@ function minnehaha_preprocess_property(&$vars, $hook, $propertyMap) {
     $propertyAddressCollection['city'] = $propAddressEntity->field_city['und'][0]['value'];
     $propertyAddressCollection['zip'] = $propAddressEntity->field_zip_code['und'][0]['value'];
     $vars['fieldPropertyAddress'] = $propertyAddressCollection;
+
+    //importing map
+    module_load_include('module', 'designssquare_com_widget_map');
+    import_map();
+    ds_init_map(map_options(
+        'ds-map',
+        'makapacs.j86ik0o4',
+        500,
+        $propertyAddressCollection['latitude'],
+        $propertyAddressCollection['longitude'],
+        '14',
+        array(
+            1 => array(
+            'lat' => $propertyAddressCollection['latitude'],
+            'lng' => $propertyAddressCollection['longitude'],
+            'minWidth' => '100',
+            'content' => '<b>'.$node->title.'</b><br><address>'.$propertyAddressCollection['street'].'<br>'.$propertyAddressCollection['city'].',<br> '.$propertyAddressCollection['state'].' '.$propertyAddressCollection['zip'].'</address>'
+            ),
+        )
+    ));
 
     $fieldParagraphAboutProperty = field_get_items('node', $node, 'field_paragraph_about_property');
     $sizeOfParagraphs = count($fieldParagraphAboutProperty);

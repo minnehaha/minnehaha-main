@@ -94,11 +94,11 @@
                     ?>
                 </div>
                 <div class="span6 sticker">
-                    <h1 class="subjudul">Minnehaha Lofts Diary</h1>
+                    <h1 class="subjudul">Minnehaha Lofts Blog</h1>
 
                     <?php print render($page['diary_list_front']);?>
                     <p>
-                        <a class="btn btn-small" href="/diary"><i class="icon-asterisk"></i> Read All</a>
+                        <a class="btn btn-small" href="/furnished-extended-stay-mn-blog"><i class="icon-asterisk"></i> Read All</a>
                     </p>
                 </div>
                 <div class="span5 sticker">

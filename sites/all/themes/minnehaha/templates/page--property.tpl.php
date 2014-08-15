@@ -172,8 +172,8 @@
                 </div>
                 <div class="tab-pane" id="map">
                     <div class="span9">
-                        <div class=span9 style="padding:0;margin: 0">
-                            <iframe width="100%" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=3324+23rd+Ave+S,+Minneapolis,+mn+55407&amp;aq=&amp;sll=44.970697,-93.261478&amp;sspn=0.411942,0.952377&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=3324+23rd+Ave+S,+Minneapolis,+Hennepin,+Minnesota+55407&amp;ll=44.966377,-93.261223&amp;spn=0.058298,0.102825&amp;z=13&amp;iwloc=A&amp;output=embed"></iframe>
+                        <div class=span9 style="padding:0;margin: 0" >
+                            <div id="ds-map"></div>
                         </div>
 
                         <div class="row">
@@ -259,8 +259,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="clearfix"></div>
     </div><!-- end container -->
     <div class="footers">
