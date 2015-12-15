@@ -91,30 +91,33 @@ function minnehaha_preprocess_page(&$vars, $hook) {
     $i = 0;
     foreach ($properties as $key => $value)
     {
-        $propertyMap[ $i ]['title'] = $value->title;
-        $propertyMap[ $i ]['url'] = drupal_get_path_alias("node/$key");
-        $featuredPhoto = $value->field_featured_photo;
-        $propertyMap[ $i ]['featuredPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredPhoto['und'][0]['uri']), array('absolute'=>true));
-        $propertyMap[ $i ]['featuredPhotoAlt'] = $value->field_featured_photo['und'][0]['alt'];
-        $featuredTestimonialPhoto = $value->field_featured_review_photo;
-        $propertyMap[ $i ]['featuredTestimonialPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredTestimonialPhoto['und'][0]['uri']), array('absolute'=>true));
-        $propertyMap[ $i ]['featuredTestimonialPhotoAlt'] = $value->field_featured_review_photo['und'][0]['alt'];
-        $fieldParagraphAboutProperty = $value->field_paragraph_about_property;
-        $propertyMap[ $i ]['summary'] = $fieldParagraphAboutProperty['und'][0]['value'];
-        $propertyMap[ $i ]['universalId'] = $value->field_rental_unit_id['und'][0]['value'];
-        $propertyMap[ $i ]['type'] = $value->field_property_type['und'][0]['value'];
+        if($value->status){
+            $propertyMap[ $i ]['title'] = $value->title;
+            $propertyMap[ $i ]['url'] = drupal_get_path_alias("node/$key");
+            $featuredPhoto = $value->field_featured_photo;
+            $propertyMap[ $i ]['featuredPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredPhoto['und'][0]['uri']), array('absolute'=>true));
+            $propertyMap[ $i ]['featuredPhotoAlt'] = $value->field_featured_photo['und'][0]['alt'];
+            $featuredTestimonialPhoto = $value->field_featured_review_photo;
+            $propertyMap[ $i ]['featuredTestimonialPhotoUrl'] = url('sites/default/files/'.file_uri_target($featuredTestimonialPhoto['und'][0]['uri']), array('absolute'=>true));
+            $propertyMap[ $i ]['featuredTestimonialPhotoAlt'] = $value->field_featured_review_photo['und'][0]['alt'];
+            $fieldParagraphAboutProperty = $value->field_paragraph_about_property;
+            $propertyMap[ $i ]['summary'] = $fieldParagraphAboutProperty['und'][0]['value'];
+            $propertyMap[ $i ]['universalId'] = $value->field_rental_unit_id['und'][0]['value'];
+            $propertyMap[ $i ]['type'] = $value->field_property_type['und'][0]['value'];
 
-        $propertyAddress = field_get_items('node', $value, 'field_property_address');
-        $propAddressEntity = node_load($propertyAddress[0]['target_id']);
-        $propertyAddressCollection = array();
-        $propertyAddressCollection['latitude'] = $propAddressEntity->field_latitude['und'][0]['value'];
-        $propertyAddressCollection['longitude'] = $propAddressEntity->field_longitude['und'][0]['value'];
-        $propertyAddressCollection['street'] = $propAddressEntity->field_street_address['und'][0]['value'];
-        $propertyAddressCollection['state'] = $propAddressEntity->field_state['und'][0]['value'];
-        $propertyAddressCollection['city'] = $propAddressEntity->field_city['und'][0]['value'];
-        $propertyAddressCollection['zip'] = $propAddressEntity->field_zip_code['und'][0]['value'];
-        $propertyMap[ $i ]['fieldPropertyAddress'] = $propertyAddressCollection;
-        $i++;
+            $propertyAddress = field_get_items('node', $value, 'field_property_address');
+            $propAddressEntity = node_load($propertyAddress[0]['target_id']);
+            $propertyAddressCollection = array();
+            $propertyAddressCollection['latitude'] = $propAddressEntity->field_latitude['und'][0]['value'];
+            $propertyAddressCollection['longitude'] = $propAddressEntity->field_longitude['und'][0]['value'];
+            $propertyAddressCollection['street'] = $propAddressEntity->field_street_address['und'][0]['value'];
+            $propertyAddressCollection['state'] = $propAddressEntity->field_state['und'][0]['value'];
+            $propertyAddressCollection['city'] = $propAddressEntity->field_city['und'][0]['value'];
+            $propertyAddressCollection['zip'] = $propAddressEntity->field_zip_code['und'][0]['value'];
+            $propertyMap[ $i ]['fieldPropertyAddress'] = $propertyAddressCollection;
+            $i++;
+        }
+
     }
 
     $vars['propertyMap'] = $propertyMap;
