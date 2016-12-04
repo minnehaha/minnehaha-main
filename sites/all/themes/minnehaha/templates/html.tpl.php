@@ -31,6 +31,10 @@
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+<link href="https://plus.google.com/101295836555841346573" rel="publisher" />
+<script type="text/javascript" async defer
+  src="https://apis.google.com/js/platform.js?publisherid=101295836555841346573">
+</script>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <?php print $page_top; ?>
